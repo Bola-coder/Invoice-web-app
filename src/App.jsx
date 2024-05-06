@@ -5,21 +5,39 @@ import Client from "./pages/Client";
 import Receipt from "./pages/Receipt";
 import Payment from "./pages/Payment";
 import CreateInvoice from "./pages/CreateInvoice";
+import CreateClient from "./pages/CreateClient";
+import AuthProvider from "./contexts/AuthContext";
+import Signup from "./pages/Signup";
+import { Box } from "@chakra-ui/react";
+import Login from "./pages/Login";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import ClientProvider from "./contexts/ClientContext";
 
 function App() {
   return (
-    <>
+    <Box as="section" maxWidth={"1536px"} margin={"0 auto"}>
       <Router>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/invoice" element={<Invoice />} />
-          <Route path="/client" element={<Client />} />
-          <Route path="/receipt" element={<Receipt />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/create-invoice" element={<CreateInvoice />} />
-        </Routes>
+        <AuthProvider>
+          <ClientProvider>
+            <Routes>
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+
+              {/* Protected Routes */}
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/invoice" element={<Invoice />} />
+                <Route path="/client" element={<Client />} />
+                <Route path="/receipt" element={<Receipt />} />
+                <Route path="/payment" element={<Payment />} />
+                <Route path="/create-invoice" element={<CreateInvoice />} />
+                <Route path="/create-client" element={<CreateClient />} />
+              </Route>
+            </Routes>
+          </ClientProvider>
+        </AuthProvider>
       </Router>
-    </>
+    </Box>
   );
 }
 

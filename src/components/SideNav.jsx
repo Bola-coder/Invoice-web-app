@@ -24,9 +24,9 @@ const SideNav = () => {
         paddingTop={"10%"}
         px={4}
       >
-        Invoice
+        Swyft
         <Text as={"span"} color={"#FFF"}>
-          Swift
+          Invoice
         </Text>
       </Text>
       <Flex justifyContent={"space-between"} flexDir={"column"} height={"90%"}>
@@ -44,7 +44,7 @@ const SideNav = () => {
                       marginRight={"10px"}
                     />
                     <Text
-                      as={"a"}
+                      as={"span"}
                       href={route.path}
                       color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
                       display={"block"}
@@ -73,7 +73,7 @@ const SideNav = () => {
                       marginRight={"10px"}
                     />
                     <Text
-                      as={"a"}
+                      as={"span"}
                       href={route.path}
                       color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
                       display={"block"}

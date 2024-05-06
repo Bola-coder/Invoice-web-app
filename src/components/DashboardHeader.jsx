@@ -1,12 +1,13 @@
+/* eslint-disable react/prop-types */
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import graph from "./../assets/icons/graph.png";
 import trend from "./../assets/icons/trend.png";
-const DashboardHeader = () => {
+const DashboardHeader = ({ user }) => {
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"}>
       <Box>
         <Text as={"h3"} fontSize={"20px"} fontWeight={600}>
-          Hello, Bolarinwa
+          Hello, {user?.firstname}
         </Text>
         <Text as={"p"} fontSize={"14px"} fontWeight={400}>
           Your current sales summary and activity.
