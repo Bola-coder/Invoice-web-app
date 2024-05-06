@@ -33,7 +33,7 @@ const InvoiceList = ({ displayTitle, invoices }) => {
               key={invoice.id}
             >
               <Text fontSize={"14px"} flexBasis={"18%"}>
-                {invoice.id}3
+                {invoice.invoiceNumber}
               </Text>
               <Text
                 fontSize={"14px"}
@@ -45,12 +45,12 @@ const InvoiceList = ({ displayTitle, invoices }) => {
                 {invoice.status}
               </Text>
               <Text fontSize={"14px"} flexBasis={"18%"}>
-                {invoice.client.length > 15
-                  ? `${invoice.client.slice(0, 15)}...`
-                  : invoice.client}
+                {invoice.client?.name.length > 15
+                  ? `${invoice.client?.name.slice(0, 15)}...`
+                  : invoice.client?.name}
               </Text>
               <Text fontSize={"14px"} flexBasis={"18%"}>
-                NGN {convertNumberToCurrencyFormat(invoice.amount)}
+                NGN {convertNumberToCurrencyFormat(invoice.total)}
               </Text>
               <Button bg={"transparent"} color={"primary.500"}>
                 Download

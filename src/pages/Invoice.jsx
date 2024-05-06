@@ -1,18 +1,31 @@
-import { Box, Flex, Text, Button } from "@chakra-ui/react";
+import { Box, Flex, Text, Button, Spinner } from "@chakra-ui/react";
 import { FaPlus } from "react-icons/fa";
 import Layout from "../components/Layout";
 import InvoiceList from "../components/InvoiceList";
-import invoices from "../data/invoices";
+// import invoices from "../data/invoices";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useInvoiceContext } from "../contexts/InvoiceContext";
 const Invoice = () => {
+  const { loading, getAllInvoices, invoices } = useInvoiceContext();
   const [currentPage, setCurrentPage] = useState(1);
   // const [itemsPerPage, setItemsPerPage] = useState(10);
   const itemsPerPage = 7;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentInvoices = invoices.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(() => {
+    const getInvoices = async () => {
+      await getAllInvoices();
+    };
+
+    getInvoices();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log("Invoices", invoices);
 
   const handleNextPage = () => {
     if (currentPage === Math.ceil(invoices.length / itemsPerPage)) return;
@@ -22,6 +35,13 @@ const Invoice = () => {
     if (currentPage === 1) return;
     setCurrentPage(currentPage - 1);
   };
+
+  if (loading) {
+    <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+      <Spinner size="xl" color="primary" />
+    </Flex>;
+  }
+
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
       <Layout>

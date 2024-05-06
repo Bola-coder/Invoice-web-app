@@ -12,6 +12,7 @@ import { Box } from "@chakra-ui/react";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import ClientProvider from "./contexts/ClientContext";
+import InvoiceProvider from "./contexts/InvoiceContext";
 
 function App() {
   return (
@@ -19,21 +20,23 @@ function App() {
       <Router>
         <AuthProvider>
           <ClientProvider>
-            <Routes>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
+            <InvoiceProvider>
+              <Routes>
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/login" element={<Login />} />
 
-              {/* Protected Routes */}
-              <Route element={<ProtectedRoutes />}>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/invoice" element={<Invoice />} />
-                <Route path="/client" element={<Client />} />
-                <Route path="/receipt" element={<Receipt />} />
-                <Route path="/payment" element={<Payment />} />
-                <Route path="/create-invoice" element={<CreateInvoice />} />
-                <Route path="/create-client" element={<CreateClient />} />
-              </Route>
-            </Routes>
+                {/* Protected Routes */}
+                <Route element={<ProtectedRoutes />}>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/invoice" element={<Invoice />} />
+                  <Route path="/client" element={<Client />} />
+                  <Route path="/receipt" element={<Receipt />} />
+                  <Route path="/payment" element={<Payment />} />
+                  <Route path="/create-invoice" element={<CreateInvoice />} />
+                  <Route path="/create-client" element={<CreateClient />} />
+                </Route>
+              </Routes>
+            </InvoiceProvider>
           </ClientProvider>
         </AuthProvider>
       </Router>

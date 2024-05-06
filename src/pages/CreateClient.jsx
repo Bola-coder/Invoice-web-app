@@ -16,12 +16,6 @@ import Layout from "../components/Layout";
 
 const CreateClient = () => {
   const { loading, createClient } = useClientContext();
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   email: "",
-  //   phoneNumber: "",
-  //   address: "",
-  // });
 
   const formik = useFormik({
     initialValues: {

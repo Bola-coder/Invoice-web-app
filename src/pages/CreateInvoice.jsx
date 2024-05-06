@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Box,
   Flex,
@@ -7,76 +6,66 @@ import {
   Input,
   Button,
   Text,
+  Select,
+  Spinner,
   //   Select,
 } from "@chakra-ui/react";
 import { FaTimes } from "react-icons/fa";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useClientContext } from "../contexts/ClientContext";
+import { useInvoiceContext } from "../contexts/InvoiceContext";
 import Layout from "../components/Layout";
 
 const CreateInvoice = () => {
-  const [formData, setFormData] = useState({
-    invoiceNumber: "",
-    client: "",
-    invoiceDate: "",
-    dueDate: "",
-    items: [{ itemName: "", quantity: 0, price: 0 }],
-    total: 0,
-    amountPaid: 0,
-    balance: 0,
-    status: "draft",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleItemChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedItems = [...formData.items];
-    updatedItems[index][name] = value;
-    setFormData({
-      ...formData,
-      items: updatedItems,
-    });
-  };
-
-  const handleAddItem = () => {
-    setFormData({
-      ...formData,
-      items: [...formData.items, { itemName: "", quantity: 0, price: 0 }],
-    });
-  };
-
-  const handleRemoveItem = (index) => {
-    if (index !== 0) {
-      const updatedItems = [...formData.items];
-      updatedItems.splice(index, 1);
-      setFormData({
-        ...formData,
-        items: updatedItems,
-      });
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Implement form submission logic here
-    console.log(formData);
-    // Reset form data after submission
-    setFormData({
+  const { clients } = useClientContext();
+  console.log(clients);
+  const { loading, createInvoice } = useInvoiceContext();
+  const formik = useFormik({
+    initialValues: {
       invoiceNumber: "",
       client: "",
       invoiceDate: "",
       dueDate: "",
       items: [{ itemName: "", quantity: 0, price: 0 }],
-      total: 0,
-      amountPaid: 0,
-      balance: 0,
-      status: "draft",
+    },
+    validationSchema: Yup.object({
+      invoiceNumber: Yup.string().required("Invoice number is required"),
+      client: Yup.string().required("Client is required"),
+      invoiceDate: Yup.date().required("Invoice date is required"),
+      dueDate: Yup.date().required("Due date is required"),
+      items: Yup.array().of(
+        Yup.object().shape({
+          itemName: Yup.string().required("Item name is required"),
+          quantity: Yup.number()
+            .min(1, "Quantity must be at least 1")
+            .required("Quantity is required"),
+          price: Yup.number()
+            .min(0, "Price must be non-negative")
+            .required("Price is required"),
+        })
+      ),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+      createInvoice(values);
+      formik.resetForm();
+    },
+  });
+
+  const handleAddItem = () => {
+    const items = formik.values.items.concat({
+      itemName: "",
+      quantity: 0,
+      price: 0,
     });
+    formik.setFieldValue("items", items);
+  };
+
+  const handleRemoveItem = (index) => {
+    const items = [...formik.values.items];
+    items.splice(index, 1);
+    formik.setFieldValue("items", items);
   };
 
   return (
@@ -87,28 +76,41 @@ const CreateInvoice = () => {
             Create Invoice
           </Text>
           <Box p={6} borderRadius="md" bg="white" boxShadow="md">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={formik.handleSubmit}>
               <FormControl>
                 <FormLabel>Invoice Number</FormLabel>
                 <Input
                   type="text"
                   name="invoiceNumber"
-                  value={formData.invoiceNumber}
-                  onChange={handleChange}
-                  placeholder="Enter invoice number"
-                  required
+                  id="invoiceNumber"
+                  value={formik.values.invoiceNumber}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.invoiceNumber &&
+                  formik.errors.invoiceNumber && (
+                    <Text color="red">{formik.errors.invoiceNumber}</Text>
+                  )}
               </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Client</FormLabel>
-                <Input
-                  type="text"
+                <Select
+                  id="client"
                   name="client"
-                  value={formData.client}
-                  onChange={handleChange}
-                  placeholder="Enter client name"
-                  required
-                />
+                  value={formik.values.client}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  placeholder="Select client"
+                >
+                  {clients.map((client) => (
+                    <option key={client._id} value={client._id}>
+                      {client.name}
+                    </option>
+                  ))}
+                </Select>
+                {formik.touched.client && formik.errors.client && (
+                  <Text color="red">{formik.errors.client}</Text>
+                )}
               </FormControl>
               <Flex mt={4}>
                 <FormControl flex="1" mr={2}>
@@ -116,56 +118,32 @@ const CreateInvoice = () => {
                   <Input
                     type="date"
                     name="invoiceDate"
-                    value={formData.invoiceDate}
-                    onChange={handleChange}
-                    required
+                    id="invoiceDate"
+                    value={formik.values.invoiceDate}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
+                  {formik.touched.invoiceDate && formik.errors.invoiceDate && (
+                    <Text color="red">{formik.errors.invoiceDate}</Text>
+                  )}
                 </FormControl>
                 <FormControl flex="1" ml={2}>
                   <FormLabel>Due Date</FormLabel>
                   <Input
                     type="date"
                     name="dueDate"
-                    value={formData.dueDate}
-                    onChange={handleChange}
-                    required
+                    id="dueDate"
+                    value={formik.values.dueDate}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
+                  {formik.touched.total && formik.errors.total && (
+                    <Text color="red">{formik.errors.total}</Text>
+                  )}
                 </FormControl>
               </Flex>
-              {/* <FormControl mt={4}>
-                <FormLabel>Items</FormLabel>
-                <Input
-                  type="text"
-                  name="item"
-                  placeholder="Item Name"
-                  value={formData.item}
-                  onChange={handleChange}
-                  required
-                  mb={"10px"}
-                />
-                <Input
-                  type="number"
-                  name="quantity"
-                  placeholder="Quantity"
-                  value={formData.quantity}
-                  onChange={handleChange}
-                  required
-                  mb={"10px"}
-                />
-                <Input
-                  type="number"
-                  name="price"
-                  placeholder="Price"
-                  value={formData.price}
-                  onChange={handleChange}
-                  required
-                  mb={"10px"}
-                />
-                <Button width={"100%"} mt={6} colorScheme="primary">
-                  Add new item
-                </Button>
-              </FormControl> */}
-              {formData.items.map((item, index) => (
+
+              {formik.values.items.map((item, index) => (
                 <FormControl key={index} mt={4}>
                   <Flex justifyContent={"space-between"}>
                     <FormLabel>Item {index + 1}</FormLabel>
@@ -178,90 +156,85 @@ const CreateInvoice = () => {
                   </Flex>
                   <Input
                     type="text"
-                    name="itemName"
+                    name={`items[${index}].itemName`}
                     placeholder="Item Name"
                     value={item.itemName}
-                    onChange={(e) => handleItemChange(e, index)}
+                    onChange={formik.handleChange}
                     required
-                    mb={"10px"}
+                    mt={2}
                   />
+                  {formik.touched.items?.[index]?.itemName &&
+                    formik.errors.items?.[index]?.itemName && (
+                      <Text color="red">
+                        {formik.errors.items[index].itemName}
+                      </Text>
+                    )}
+
                   <Input
                     type="number"
-                    name="quantity"
+                    name={`items[${index}].quantity`}
                     placeholder="Quantity"
                     value={item.quantity}
-                    onChange={(e) => handleItemChange(e, index)}
+                    onChange={formik.handleChange}
                     required
-                    mb={"10px"}
+                    mt={2}
                   />
+                  {formik.touched.items?.[index]?.quantity &&
+                    formik.errors.items?.[index]?.quantity && (
+                      <Text color="red">
+                        {formik.errors.items[index].quantity}
+                      </Text>
+                    )}
                   <Input
                     type="number"
-                    name="price"
+                    name={`items[${index}].price`}
                     placeholder="Price"
                     value={item.price}
-                    onChange={(e) => handleItemChange(e, index)}
+                    onChange={formik.handleChange}
                     required
-                    mb={"10px"}
+                    mt={2}
                   />
+                  {formik.touched.items?.[index]?.price &&
+                    formik.errors.items?.[index]?.price && (
+                      <Text color="red">
+                        {formik.errors.items[index].price}
+                      </Text>
+                    )}
                 </FormControl>
               ))}
               <Button
                 mt={4}
                 colorScheme="primary"
-                width={"100%"}
+                type="button"
                 onClick={handleAddItem}
               >
                 Add new item
               </Button>
+
               <Flex mt={4}>
-                <FormControl flex="1" mr={2}>
+                {/* <FormControl flex="1" mr={2}>
                   <FormLabel>Total</FormLabel>
                   <Input
                     type="number"
                     name="total"
-                    value={formData.total}
-                    onChange={handleChange}
+                    id="total"
+                    value={formik.values.total}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     readOnly
                   />
-                </FormControl>
-                {/* <FormControl flex="1" ml={2}>
-                  <FormLabel>Amount Paid</FormLabel>
-                  <Input
-                    type="number"
-                    name="amountPaid"
-                    value={formData.amountPaid}
-                    onChange={handleChange}
-                  />
+                  {formik.touched.total && formik.errors.total && (
+                    <Text color="red">{formik.errors.total}</Text>
+                  )}
                 </FormControl> */}
               </Flex>
-              {/* <FormControl mt={4}>
-                <FormLabel>Balance</FormLabel>
-                <Input
-                  type="number"
-                  name="balance"
-                  value={formData.balance}
-                  onChange={handleChange}
-                  readOnly
-                />
-              </FormControl> */}
-              {/* <FormControl mt={4}>
-                <FormLabel>Status</FormLabel>
-                <Select
-                  name="status"
-                  value={formData.status}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="draft">Draft</option>
-                  <option value="sent">Sent</option>
-                  <option value="not-paid">Not Paid</option>
-                  <option value="partially-paid">Partially Paid</option>
-                  <option value="paid">Paid</option>
-                </Select>
-              </FormControl> */}
               <Flex justifyContent={"flex-end"}>
                 <Button mt={6} colorScheme="primary" type="submit">
-                  Create Invoice
+                  {loading ? (
+                    <Spinner color="white" size={"md"} />
+                  ) : (
+                    <Text>Create Invoice</Text>
+                  )}
                 </Button>
               </Flex>
             </form>

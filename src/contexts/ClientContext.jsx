@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,13 @@ const ClientProvider = ({ children }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchAllClients = async () => {
+      await fetchClients();
+    };
+    fetchAllClients();
+  }, []);
 
   const fetchClients = async () => {
     setLoading(true);
