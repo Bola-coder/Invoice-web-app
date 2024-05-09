@@ -13,6 +13,8 @@ import Login from "./pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import ClientProvider from "./contexts/ClientContext";
 import InvoiceProvider from "./contexts/InvoiceContext";
+import InvoiceDetails from "./pages/InvoiceDetails";
+import EditInvoice from "./pages/EditInvoice";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
                   <Route path="/payment" element={<Payment />} />
                   <Route path="/create-invoice" element={<CreateInvoice />} />
                   <Route path="/create-client" element={<CreateClient />} />
+                  <Route path="/invoice/:id" element={<InvoiceDetails />} />
+                  <Route path="/invoice/edit/:id" element={<EditInvoice />} />
                 </Route>
               </Routes>
             </InvoiceProvider>

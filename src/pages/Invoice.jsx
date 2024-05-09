@@ -25,7 +25,7 @@ const Invoice = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log("Invoices", invoices);
+  // console.log("Invoices", invoices);
 
   const handleNextPage = () => {
     if (currentPage === Math.ceil(invoices.length / itemsPerPage)) return;
@@ -120,17 +120,28 @@ const Invoice = () => {
           </Flex> */}
 
           {/* List */}
-          <InvoiceList invoices={currentInvoices} />
-          <Box mt="20px">
-            <Pagination
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPage}
-              numberOfContent={invoices.length}
-              handleNextPage={() => handleNextPage()}
-              handlePreviousPage={() => handlePreviousPage()}
-              handlePageChange={(page) => setCurrentPage(page)}
-            />
-          </Box>
+          {invoices.length > 0 ? (
+            <Box>
+              <InvoiceList invoices={currentInvoices} />
+              <Box mt="20px">
+                <Pagination
+                  currentPage={currentPage}
+                  itemsPerPage={itemsPerPage}
+                  numberOfContent={invoices.length}
+                  handleNextPage={() => handleNextPage()}
+                  handlePreviousPage={() => handlePreviousPage()}
+                  handlePageChange={(page) => setCurrentPage(page)}
+                />
+              </Box>
+            </Box>
+          ) : (
+            <Flex justifyContent={"center"} alignItems={"center"} mt={"20%"}>
+              <Box>
+                <Text>No invoices available</Text>
+                <Text>Please create an invoice to get started </Text>
+              </Box>
+            </Flex>
+          )}
         </Box>
       </Layout>
     </Box>
