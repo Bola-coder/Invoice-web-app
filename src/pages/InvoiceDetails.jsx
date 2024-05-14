@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -13,20 +13,42 @@ import {
   Button,
 } from "@chakra-ui/react";
 import { useInvoiceContext } from "../contexts/InvoiceContext";
+import { useInvoicePaymentContext } from "../contexts/InvoicePaymentContext";
 import { convertNumberToCurrencyFormat } from "../utils/formatNumber";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
+import AddPayment from "./AddPayment";
 
 const InvoiceDetails = () => {
   const { id } = useParams();
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const { invoiceDetails, loading, getInvoiceDetails } = useInvoiceContext();
+  const {
+    loading: invoicePaymentLoading,
+    invoicePayments,
+    getInvoicePayments,
+    createNewPayment,
+  } = useInvoicePaymentContext();
+
+  const handleOpenModal = () => {
+    setOpenPaymentModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenPaymentModal(false);
+  };
+
+  const handlePaymentSubmit = async (data) => {
+    await createNewPayment(data);
+  };
 
   useEffect(() => {
     console.log(id);
     const getInvoice = async () => {
       await getInvoiceDetails(id);
+      getInvoicePayments(id);
     };
     getInvoice();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,19 +124,19 @@ const InvoiceDetails = () => {
                 </GridItem>
                 <GridItem>
                   <Text>
-                    <strong>Total:</strong> $
+                    <strong>Total:</strong> NGN
                     {convertNumberToCurrencyFormat(
                       invoiceDetails.total.toFixed(2)
                     )}
                   </Text>
                   <Text>
-                    <strong>Amount Paid:</strong> $
+                    <strong>Amount Paid:</strong> NGN
                     {convertNumberToCurrencyFormat(
                       invoiceDetails.amountPaid.toFixed(2)
                     )}
                   </Text>
                   <Text>
-                    <strong>Balance:</strong> $
+                    <strong>Balance:</strong> NGN
                     {convertNumberToCurrencyFormat(
                       invoiceDetails?.balance.toFixed(2)
                     )}
@@ -137,13 +159,77 @@ const InvoiceDetails = () => {
                     <HStack justifyContent="space-between">
                       <Text>{item.itemName}</Text>
                       <Text>
-                        {item.quantity} x ${item.price.toFixed(2)}
+                        {item.quantity} x NGN {item.price.toFixed(2)}
                       </Text>
                     </HStack>
                   </Box>
                 ))}
               </Box>
             </VStack>
+          </Box>
+
+          {/* Payment Details */}
+          <Box mt={"5%"} width={"100%"}>
+            {/* Header */}
+            <Flex justifyContent={"space-between"} alignItems={"center"}>
+              <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
+                Invoice Payment Details
+              </Text>
+              {/* <Link to={`/invoice/payment/${id}`}> */}
+              <Button colorScheme="primary" onClick={handleOpenModal}>
+                {" "}
+                <FaPlus color="#fff" />{" "}
+                <Text ml={"2px"}>Enter new payment</Text>
+              </Button>
+              {/* </Link> */}
+            </Flex>
+            {/* Modal for Payment */}
+            <AddPayment
+              isOpen={openPaymentModal}
+              handleClose={handleCloseModal}
+              payments={invoicePayments}
+              invoiceId={id}
+              handleSubmit={handlePaymentSubmit}
+            />
+            {/* Content */}
+            <Box
+              mt={"20px"}
+              p="6"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              boxShadow="md"
+              bg="white"
+              w="100%"
+              // maxW=""
+            >
+              <HStack justifyContent="space-between" mb={"10px"}>
+                <Text>Payment Date</Text>
+                <Text>Payment Method</Text>
+                <Text>Amount Paid</Text>
+              </HStack>
+              {invoicePaymentLoading ? (
+                <Flex justifyContent={"center"} alignItems={"center"}>
+                  <Spinner size="xl" color="primary" />
+                </Flex>
+              ) : (
+                <VStack align="stretch" spacing="2">
+                  {invoicePayments?.payments?.map((payment, index) => (
+                    <Box key={index} p={2} bg="primary.500" color={"#FFF"}>
+                      <HStack justifyContent="space-between">
+                        <Text>
+                          {new Date(payment.date).toLocaleDateString()}
+                        </Text>
+                        <Text>{payment.paymentMethod}</Text>
+                        <Text>
+                          NGN {convertNumberToCurrencyFormat(payment.amount)}
+                        </Text>
+                      </HStack>
+                    </Box>
+                  ))}
+                </VStack>
+              )}
+            </Box>
           </Box>
         </Box>
       </Layout>

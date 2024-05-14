@@ -15,6 +15,9 @@ import ClientProvider from "./contexts/ClientContext";
 import InvoiceProvider from "./contexts/InvoiceContext";
 import InvoiceDetails from "./pages/InvoiceDetails";
 import EditInvoice from "./pages/EditInvoice";
+import ClientDetails from "./pages/ClientDetails";
+import InvoicePaymentProvider from "./contexts/InvoicePaymentContext";
+// import AddPayment from "./pages/AddPayment";
 
 function App() {
   return (
@@ -23,23 +26,30 @@ function App() {
         <AuthProvider>
           <ClientProvider>
             <InvoiceProvider>
-              <Routes>
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/login" element={<Login />} />
+              <InvoicePaymentProvider>
+                <Routes>
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/login" element={<Login />} />
 
-                {/* Protected Routes */}
-                <Route element={<ProtectedRoutes />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/invoice" element={<Invoice />} />
-                  <Route path="/client" element={<Client />} />
-                  <Route path="/receipt" element={<Receipt />} />
-                  <Route path="/payment" element={<Payment />} />
-                  <Route path="/create-invoice" element={<CreateInvoice />} />
-                  <Route path="/create-client" element={<CreateClient />} />
-                  <Route path="/invoice/:id" element={<InvoiceDetails />} />
-                  <Route path="/invoice/edit/:id" element={<EditInvoice />} />
-                </Route>
-              </Routes>
+                  {/* Protected Routes */}
+                  <Route element={<ProtectedRoutes />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/invoice" element={<Invoice />} />
+                    <Route path="/client" element={<Client />} />
+                    <Route path="/receipt" element={<Receipt />} />
+                    <Route path="/payment" element={<Payment />} />
+                    <Route path="/create-invoice" element={<CreateInvoice />} />
+                    <Route path="/create-client" element={<CreateClient />} />
+                    <Route path="/invoice/:id" element={<InvoiceDetails />} />
+                    <Route path="/invoice/edit/:id" element={<EditInvoice />} />
+                    <Route path="/client/:id" element={<ClientDetails />} />
+                    {/* <Route
+                      path="/invoice/payment/:invoiceId"
+                      element={<AddPayment />}
+                    /> */}
+                  </Route>
+                </Routes>
+              </InvoicePaymentProvider>
             </InvoiceProvider>
           </ClientProvider>
         </AuthProvider>

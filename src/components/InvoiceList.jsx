@@ -32,10 +32,10 @@ const InvoiceList = ({ displayTitle, invoices }) => {
           padding={"10px"}
           cursor={"pointer"}
         >
-          <Text fontSize={"14px"} fontWeight={500} flexBasis={"18%"}>
+          <Text fontSize={"14px"} fontWeight={500} flexBasis={"10%"}>
             Invoice Number
           </Text>
-          <Text fontSize={"14px"} fontWeight={500} flexBasis={"18%"}>
+          <Text fontSize={"14px"} fontWeight={500} flexBasis={"12%"}>
             Status
           </Text>
           <Text fontSize={"14px"} fontWeight={500} flexBasis={"18%"}>
@@ -43,6 +43,9 @@ const InvoiceList = ({ displayTitle, invoices }) => {
           </Text>
           <Text fontSize={"14px"} fontWeight={500} flexBasis={"18%"}>
             Total Amount
+          </Text>
+          <Text fontSize={"14px"} fontWeight={500} flexBasis={"18%"}>
+            Amount Paid
           </Text>
           <Button bg={"transparent"} color={"primary.500"}>
             Action
@@ -63,12 +66,12 @@ const InvoiceList = ({ displayTitle, invoices }) => {
                 cursor={"pointer"}
                 onClick={() => navigate(`/invoice/${invoice._id}`)}
               >
-                <Text fontSize={"14px"} flexBasis={"18%"}>
+                <Text fontSize={"14px"} flexBasis={"10%"}>
                   {invoice.invoiceNumber}
                 </Text>
                 <Text
                   fontSize={"14px"}
-                  flexBasis={"18%"}
+                  flexBasis={"12%"}
                   color={
                     invoice.status === "Paid" ? "primary.500" : "primary.100"
                   }
@@ -83,7 +86,14 @@ const InvoiceList = ({ displayTitle, invoices }) => {
                 <Text fontSize={"14px"} flexBasis={"18%"}>
                   NGN {convertNumberToCurrencyFormat(invoice.total)}
                 </Text>
-                <Button bg={"transparent"} color={"primary.500"}>
+                <Text fontSize={"14px"} flexBasis={"18%"}>
+                  NGN {convertNumberToCurrencyFormat(invoice.amountPaid)}
+                </Text>
+                <Button
+                  bg={"gray.400"}
+                  color={"#FFF"}
+                  _hover={{ backgroundColor: "primary.500" }}
+                >
                   Download
                 </Button>
               </Flex>

@@ -6,8 +6,8 @@ import client from "./../assets/icons/client.png";
 import client_active from "./../assets/icons/client-active.png";
 import receipt from "./../assets/icons/receipt.png";
 import receipt_active from "./../assets/icons/receipt-active.png";
-import payment from "./../assets/icons/payment.png";
-import payment_active from "./../assets/icons/payment-active.png";
+// import payment from "./../assets/icons/payment.png";
+// import payment_active from "./../assets/icons/payment-active.png";
 import profile from "./../assets/icons/profile.png";
 import profile_active from "./../assets/icons/profile-active.png";
 import settings from "./../assets/icons/settings.png";
@@ -42,13 +42,13 @@ const routes = [
     activeIcon: receipt_active,
     position: "top",
   },
-  {
-    name: "Payment",
-    path: "/payment",
-    icon: payment,
-    activeIcon: payment_active,
-    position: "top",
-  },
+  // {
+  //   name: "Payment",
+  //   path: "/payment",
+  //   icon: payment,
+  //   activeIcon: payment_active,
+  //   position: "top",
+  // },
   {
     name: "Profile",
     path: "/profile",

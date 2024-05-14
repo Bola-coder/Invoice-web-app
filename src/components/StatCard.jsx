@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
-import { Flex, Box, Text } from "@chakra-ui/react";
-import { convertNumberToCurrencyFormat } from "../utils/formatNumber";
-import { IoMdArrowUp, IoMdArrowDown } from "react-icons/io";
-const StatCard = ({ statusType, increament, value }) => {
+import { Box, Text } from "@chakra-ui/react";
+// import { IoMdArrowUp, IoMdArrowDown } from "react-icons/io";
+const StatCard = ({ value, text }) => {
   return (
     <Box bg={"#FFF"} padding={"20px"} borderRadius={"12px"}>
-      {statusType == "percentage" ? (
+      {/* {statusType == "percentage" ? (
         <Flex
           w={"45px"}
           height={"20px"}
@@ -42,17 +41,17 @@ const StatCard = ({ statusType, increament, value }) => {
             {value} New
           </Text>
         </Box>
-      )}
+      )} */}
       <Text
         fontSize={"14px"}
         fontWeight={500}
         color={"text.charcoal"}
         mb={"5px"}
       >
-        Today&apos;s revenue
+        {text}
       </Text>
       <Text fontSize={"20px"} color={"text.coral"}>
-        NGN {convertNumberToCurrencyFormat(234090)}
+        {value}
       </Text>
     </Box>
   );

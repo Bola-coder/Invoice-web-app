@@ -10,11 +10,13 @@ import Layout from "../components/Layout";
 import RecentTransactions from "../components/RecentTransactions";
 const Dashboard = () => {
   const { user } = useAuth();
-  const { invoices, getAllInvoices } = useInvoiceContext();
+  const { invoices, invoiceStats, getAllInvoices, getInvoiceStats } =
+    useInvoiceContext();
 
   useEffect(() => {
     const getInvoices = async () => {
       await getAllInvoices();
+      await getInvoiceStats(7);
     };
 
     getInvoices();
@@ -22,12 +24,15 @@ const Dashboard = () => {
   }, []);
   console.log(user);
   const recentInvoice = invoices.slice(0, 5);
+
+  if (!Object.keys(invoiceStats).length) return null;
+
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
       <Layout>
         <Box padding={"3%"}>
           <DashboardHeader user={user} />
-          <DashboardStats />
+          <DashboardStats invoiceStats={invoiceStats} />
           <Flex justifyContent={"space-between"}>
             <Box width={"60%"}>
               <InvoiceList displayTitle={true} invoices={recentInvoice} />

@@ -22,11 +22,13 @@ const InvoiceProvider = ({ children }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [invoices, setInvoices] = useState([]);
   const [invoiceDetails, setInvoiceDetails] = useState({});
+  const [invoiceStats, setInvoiceStats] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getInvoices = async () => {
       await getAllInvoices();
+      await getInvoiceStats(7);
     };
 
     getInvoices();
@@ -134,15 +136,37 @@ const InvoiceProvider = ({ children }) => {
       });
   };
 
+  const getInvoiceStats = async (intervalPeriod) => {
+    setLoading(true);
+    axios
+      .get(`${apiUrl}/invoices/stats?intervalPeriod=${intervalPeriod}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setInvoiceStats(res.data.data.invoiceStats);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  };
+
   const values = {
     invoices,
     invoiceDetails,
     setInvoices,
     loading,
+    invoiceStats,
     getAllInvoices,
     createInvoice,
     getInvoiceDetails,
     updateInvoice,
+    getInvoiceStats,
   };
   return (
     <InvoiceContext.Provider value={values}>{children}</InvoiceContext.Provider>
