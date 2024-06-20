@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Box, Flex } from "@chakra-ui/react";
 import { useAuth } from "../contexts/AuthContext";
 import { useInvoiceContext } from "../contexts/InvoiceContext";
@@ -8,21 +8,33 @@ import DashboardStats from "../components/DashboardStats";
 import InvoiceList from "../components/InvoiceList";
 import Layout from "../components/Layout";
 import RecentTransactions from "../components/RecentTransactions";
+import PaymentStatChart from "../components/PaymentChart";
 const Dashboard = () => {
   const { user } = useAuth();
-  const { invoices, invoiceStats, getAllInvoices, getInvoiceStats } =
-    useInvoiceContext();
+  const {
+    invoices,
+    invoiceStats,
+    paymentStats,
+    getAllInvoices,
+    getInvoiceStats,
+    getPaymentStats,
+  } = useInvoiceContext();
+  const [graphicalView, setGrahpcialView] = useState(false);
+
+  const handleViewToggle = () => {
+    setGrahpcialView(!graphicalView);
+  };
 
   useEffect(() => {
     const getInvoices = async () => {
       await getAllInvoices();
-      await getInvoiceStats(7);
+      await getInvoiceStats(30);
+      await getPaymentStats(60);
     };
 
     getInvoices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(user);
   const recentInvoice = invoices.slice(0, 5);
 
   if (!Object.keys(invoiceStats).length) return null;
@@ -31,8 +43,16 @@ const Dashboard = () => {
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
       <Layout>
         <Box padding={"3%"}>
-          <DashboardHeader user={user} />
-          <DashboardStats invoiceStats={invoiceStats} />
+          <DashboardHeader
+            user={user}
+            handleViewToggle={handleViewToggle}
+            graphicalView={graphicalView}
+          />
+          {graphicalView ? (
+            <PaymentStatChart data={paymentStats} />
+          ) : (
+            <DashboardStats invoiceStats={invoiceStats} />
+          )}
           <Flex justifyContent={"space-between"}>
             <Box width={"60%"}>
               <InvoiceList displayTitle={true} invoices={recentInvoice} />

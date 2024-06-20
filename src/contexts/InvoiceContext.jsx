@@ -23,7 +23,9 @@ const InvoiceProvider = ({ children }) => {
   const [invoices, setInvoices] = useState([]);
   const [invoiceDetails, setInvoiceDetails] = useState({});
   const [invoiceStats, setInvoiceStats] = useState({});
+  const [paymentStats, setPaymentStats] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [pdfLoading, setPdfLoading] = useState(false);
 
   useEffect(() => {
     const getInvoices = async () => {
@@ -156,17 +158,84 @@ const InvoiceProvider = ({ children }) => {
       });
   };
 
+  const getPaymentStats = async (intervalPeriod) => {
+    setLoading(true);
+    axios
+      .get(`${apiUrl}/invoices/stats/payment?days=${intervalPeriod}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        setPaymentStats(res.data.data.paymentStats);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  };
+
+  const generateInvoicePdf = async (invoiceId) => {
+    setPdfLoading(true);
+    axios
+      .patch(
+        `${apiUrl}/invoices/convert/${invoiceId}`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res.data);
+        getInvoiceDetails(invoiceId);
+        toast({
+          status: "success",
+          message: "Success",
+          description: "Pdf generated successfully",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        if (err.response.data) {
+          toast({
+            status: "error",
+            message: "Failed to generate pdf",
+            description: err.response.data.message,
+          });
+        } else {
+          toast({
+            status: "error",
+            message: "Failed to generate pdf",
+            description: err.message,
+          });
+        }
+      })
+      .finally(() => {
+        setPdfLoading(false);
+      });
+  };
+
   const values = {
     invoices,
     invoiceDetails,
     setInvoices,
     loading,
     invoiceStats,
+    pdfLoading,
+    paymentStats,
     getAllInvoices,
     createInvoice,
     getInvoiceDetails,
     updateInvoice,
     getInvoiceStats,
+    generateInvoicePdf,
+    getPaymentStats,
   };
   return (
     <InvoiceContext.Provider value={values}>{children}</InvoiceContext.Provider>

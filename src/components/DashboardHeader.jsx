@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Flex, Box, Text, Image } from "@chakra-ui/react";
 import graph from "./../assets/icons/graph.png";
-import trend from "./../assets/icons/trend.png";
-const DashboardHeader = ({ user }) => {
+// import trend from "./../assets/icons/trend.png";
+const DashboardHeader = ({ user, graphicalView, handleViewToggle }) => {
   return (
     <Flex justifyContent={"space-between"} alignItems={"center"}>
       <Box>
@@ -21,11 +21,12 @@ const DashboardHeader = ({ user }) => {
           bg={"#FFF"}
           mr={"10px"}
           borderRadius={"8px"}
+          onClick={handleViewToggle}
         >
           <Image src={graph} alt="Graph Icon" mr={"5px"} />
-          <Text as="p">Graphical View</Text>
+          <Text as="p">{graphicalView ? "Table View" : "Graphical View"}</Text>
         </Flex>
-        <Flex
+        {/* <Flex
           padding={"6px"}
           paddingX={"10px"}
           cursor={"pointer"}
@@ -35,7 +36,7 @@ const DashboardHeader = ({ user }) => {
         >
           <Image src={trend} alt="Trend Icon" mr={"5px"} />
           <Text as="p">Trends</Text>
-        </Flex>
+        </Flex> */}
       </Flex>
     </Flex>
   );

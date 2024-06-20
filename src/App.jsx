@@ -20,8 +20,9 @@ import InvoicePaymentProvider from "./contexts/InvoicePaymentContext";
 // import AddPayment from "./pages/AddPayment";
 
 function App() {
+  // maxWidth={"1536px"}
   return (
-    <Box as="section" maxWidth={"1536px"} margin={"0 auto"}>
+    <Box as="section" margin={"0 auto"}>
       <Router>
         <AuthProvider>
           <ClientProvider>
