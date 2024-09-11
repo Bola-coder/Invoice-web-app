@@ -14,19 +14,17 @@ const Pagination = ({
   const numberOfPages = Math.ceil(numberOfContent / itemsPerPage);
 
   // Define the range of visible page numbers
-  let startPage = currentPage - 2;
+  let startPage = Math.max(currentPage - 2, 1); // Ensure startPage is not less than 1
   let endPage = currentPage + 2;
 
-  // Ensure startPage is within bounds
-  if (startPage < 1) {
-    endPage -= startPage - 1;
-    startPage = 1;
+  // Adjust endPage if it exceeds the total number of pages
+  if (endPage > numberOfPages) {
+    endPage = numberOfPages;
   }
 
-  // Ensure endPage is within bounds
-  if (endPage > numberOfPages) {
-    startPage -= endPage - numberOfPages;
-    endPage = numberOfPages;
+  // Adjust startPage again if endPage is less than 5
+  if (endPage - startPage < 4) {
+    startPage = Math.max(endPage - 4, 1);
   }
 
   // Generate page numbers within the defined range
@@ -51,6 +49,8 @@ const Pagination = ({
         onClick={() => {
           handlePreviousPage(pageNumbers);
         }}
+        disabled={currentPage === 1}
+        opacity={currentPage === 1 ? 0.5 : 1} // Dim the button if it's at the first page
       >
         <FaArrowLeft size={"24px"} color="#195F5D" />
       </Box>
@@ -107,6 +107,8 @@ const Pagination = ({
         mx={"20px"}
         cursor={"pointer"}
         onClick={() => handleNextPage(pageNumbers)}
+        disabled={currentPage === numberOfPages}
+        opacity={currentPage === numberOfPages ? 0.5 : 1} // Dim the button if it's at the last page
       >
         <FaArrowRight size={"24px"} color="#195F5D" />
       </Box>

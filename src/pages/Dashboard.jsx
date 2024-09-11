@@ -37,7 +37,7 @@ const Dashboard = () => {
   }, []);
   const recentInvoice = invoices.slice(0, 5);
 
-  if (!Object.keys(invoiceStats).length) return null;
+  // if (!Object.keys(invoiceStats).length) return null;
 
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>

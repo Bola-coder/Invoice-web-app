@@ -22,7 +22,7 @@ const InvoiceProvider = ({ children }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const [invoices, setInvoices] = useState([]);
   const [invoiceDetails, setInvoiceDetails] = useState({});
-  const [invoiceStats, setInvoiceStats] = useState({});
+  const [invoiceStats, setInvoiceStats] = useState(null);
   const [paymentStats, setPaymentStats] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pdfLoading, setPdfLoading] = useState(false);
@@ -36,7 +36,7 @@ const InvoiceProvider = ({ children }) => {
     getInvoices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  console.log(invoices);
+  // console.log(invoices);
 
   const getAllInvoices = async () => {
     setLoading(true);
@@ -70,7 +70,7 @@ const InvoiceProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         getAllInvoices();
         setLoading(false);
         toast({
@@ -97,8 +97,8 @@ const InvoiceProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
-        console.log(res.data.data.invoice);
+        // console.log(res.data);
+        // console.log(res.data.data.invoice);
         setInvoiceDetails(res.data.data.invoice);
         setLoading(false);
       })
@@ -121,8 +121,7 @@ const InvoiceProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("Hehe");
-        console.log(res.data);
+        // console.log(res.data);
         getAllInvoices();
         setLoading(false);
         toast({
@@ -148,7 +147,7 @@ const InvoiceProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setInvoiceStats(res.data.data.invoiceStats);
         setLoading(false);
       })
@@ -168,7 +167,7 @@ const InvoiceProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setPaymentStats(res.data.data.paymentStats);
         setLoading(false);
       })
@@ -192,7 +191,7 @@ const InvoiceProvider = ({ children }) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         getInvoiceDetails(invoiceId);
         toast({
           status: "success",

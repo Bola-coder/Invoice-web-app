@@ -130,9 +130,11 @@ const EditInvoice = () => {
 
   if (loading || Object.keys(invoiceDetails).length === 0) {
     return (
-      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
-        <Spinner size="xl" color="primary" />
-      </Flex>
+      <Layout>
+        <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+          <Spinner size="xl" color="primary" />
+        </Flex>
+      </Layout>
     );
   }
 

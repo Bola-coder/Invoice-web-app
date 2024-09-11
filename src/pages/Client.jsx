@@ -17,7 +17,7 @@ const Client = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log("Clients", clients);
+  // console.log("Clients", clients);
   if (loading) {
     <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
       <Spinner size="xl" color="primary" />

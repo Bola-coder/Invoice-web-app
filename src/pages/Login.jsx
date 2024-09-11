@@ -11,7 +11,7 @@ import {
   //   useToast,
   //   Select,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -54,7 +54,7 @@ const Login = () => {
     <Box
       padding={"3%"}
       fontFamily={"IBM Plex Sans"}
-      width={"80%"}
+      width={"50%"}
       margin={"auto"}
       marginTop={"5%"}
       bg={"primary.500"}
@@ -139,6 +139,14 @@ const Login = () => {
             </Button>
           </Flex>
         </form>
+        <Box mt={8} display={"flex"} justifyContent={"flex-end"}>
+          <Text as="p" fontWeight={500} fontSize={20}>
+            Don't have an account?{" "}
+            <Text as={"span"} color={"primary.500"} fontWeight={600}>
+              <Link to={"/signup"}>Register</Link>
+            </Text>
+          </Text>
+        </Box>
       </Box>
     </Box>
   );

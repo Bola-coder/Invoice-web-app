@@ -94,7 +94,7 @@ const InvoiceList = ({ displayTitle, invoices }) => {
                   color={"#FFF"}
                   _hover={{ backgroundColor: "primary.500" }}
                 >
-                  Download
+                  View
                 </Button>
               </Flex>
             </Box>

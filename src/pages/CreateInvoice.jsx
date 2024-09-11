@@ -23,14 +23,12 @@ const CreateInvoice = () => {
   const { loading, createInvoice } = useInvoiceContext();
   const formik = useFormik({
     initialValues: {
-      invoiceNumber: "",
       client: "",
       invoiceDate: "",
       dueDate: "",
       items: [{ itemName: "", quantity: 0, price: 0 }],
     },
     validationSchema: Yup.object({
-      invoiceNumber: Yup.string().required("Invoice number is required"),
       client: Yup.string().required("Client is required"),
       invoiceDate: Yup.date().required("Invoice date is required"),
       dueDate: Yup.date().required("Due date is required"),
@@ -77,21 +75,6 @@ const CreateInvoice = () => {
           </Text>
           <Box p={6} borderRadius="md" bg="white" boxShadow="md">
             <form onSubmit={formik.handleSubmit}>
-              <FormControl>
-                <FormLabel>Invoice Number</FormLabel>
-                <Input
-                  type="text"
-                  name="invoiceNumber"
-                  id="invoiceNumber"
-                  value={formik.values.invoiceNumber}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                {formik.touched.invoiceNumber &&
-                  formik.errors.invoiceNumber && (
-                    <Text color="red">{formik.errors.invoiceNumber}</Text>
-                  )}
-              </FormControl>
               <FormControl mt={4}>
                 <FormLabel>Client</FormLabel>
                 <Select

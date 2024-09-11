@@ -28,7 +28,6 @@ const ProtectedRoutes = () => {
     if (!loading && isAuthenticated === false) {
       navigate("/login");
     }
-    // console.log(isAuthenticated);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, isAuthenticated]);
 

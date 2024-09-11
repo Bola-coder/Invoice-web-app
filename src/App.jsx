@@ -15,7 +15,6 @@ import ClientProvider from "./contexts/ClientContext";
 import InvoiceProvider from "./contexts/InvoiceContext";
 import InvoiceDetails from "./pages/InvoiceDetails";
 import EditInvoice from "./pages/EditInvoice";
-import ClientDetails from "./pages/ClientDetails";
 import InvoicePaymentProvider from "./contexts/InvoicePaymentContext";
 // import AddPayment from "./pages/AddPayment";
 
@@ -43,7 +42,6 @@ function App() {
                     <Route path="/create-client" element={<CreateClient />} />
                     <Route path="/invoice/:id" element={<InvoiceDetails />} />
                     <Route path="/invoice/edit/:id" element={<EditInvoice />} />
-                    <Route path="/client/:id" element={<ClientDetails />} />
                     {/* <Route
                       path="/invoice/payment/:invoiceId"
                       element={<AddPayment />}

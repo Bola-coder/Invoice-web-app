@@ -18,7 +18,7 @@ import { convertNumberToCurrencyFormat } from "../utils/formatNumber";
 import Layout from "../components/Layout";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+import { FaEdit, FaDownload, FaFilePdf, FaPlus } from "react-icons/fa";
 import AddPayment from "./AddPayment";
 
 const InvoiceDetails = () => {
@@ -38,7 +38,6 @@ const InvoiceDetails = () => {
     createNewPayment,
   } = useInvoicePaymentContext();
 
-  console.log(pdfLoading);
   const handleOpenModal = () => {
     setOpenPaymentModal(true);
   };
@@ -56,7 +55,6 @@ const InvoiceDetails = () => {
   };
 
   useEffect(() => {
-    console.log(id);
     const getInvoice = async () => {
       await getInvoiceDetails(id);
       getInvoicePayments(id);
@@ -64,13 +62,15 @@ const InvoiceDetails = () => {
     getInvoice();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
-  console.log(invoiceDetails);
+  // console.log(invoiceDetails);
 
   if (loading || Object.keys(invoiceDetails).length === 0) {
     return (
-      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
-        <Spinner size="xl" color="primary" />
-      </Flex>
+      <Layout>
+        <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+          <Spinner size="xl" color="primary" />
+        </Flex>
+      </Layout>
     );
   }
 
@@ -88,7 +88,13 @@ const InvoiceDetails = () => {
               <Link to={`/invoice/edit/${id}`}>
                 <Button colorScheme="primary">
                   {" "}
-                  <FaPlus color="#fff" /> <Text ml={"2px"}>Edit Invoice</Text>
+                  <FaEdit
+                    color="#fff"
+                    style={{
+                      marginRight: 4,
+                    }}
+                  />{" "}
+                  <Text ml={"2px"}>Edit Invoice</Text>
                 </Button>
               </Link>
             </Flex>
@@ -107,7 +113,6 @@ const InvoiceDetails = () => {
                     Invoice #{invoiceDetails?.invoiceNumber}
                   </Text>
                   <Text>
-                    Status:{" "}
                     <Badge
                       colorScheme={
                         invoiceDetails?.status === "paid"
@@ -116,6 +121,7 @@ const InvoiceDetails = () => {
                           ? "yellow"
                           : "red"
                       }
+                      size={"lg"}
                     >
                       {invoiceDetails?.status.toUpperCase()}
                     </Badge>
@@ -166,14 +172,14 @@ const InvoiceDetails = () => {
                     <Box
                       key={index}
                       p={2}
-                      bg="primary.500"
-                      color={"#FFF"}
+                      bg="gray.100"
+                      color={"primary.500"}
                       borderRadius="md"
                       mt={2}
                     >
                       <HStack justifyContent="space-between">
-                        <Text>{item.itemName}</Text>
-                        <Text>
+                        <Text fontWeight={500}>{item.itemName}</Text>
+                        <Text fontWeight={500}>
                           {item.quantity} x NGN {item.price.toFixed(2)}
                         </Text>
                       </HStack>
@@ -187,6 +193,12 @@ const InvoiceDetails = () => {
                   mr={"10px"}
                   onClick={() => generatePdf(id)}
                 >
+                  <FaFilePdf
+                    color="primary.500"
+                    style={{
+                      marginRight: 4,
+                    }}
+                  />
                   {!pdfLoading ? (
                     <Text ml={"2px"}>
                       {invoiceDetails?.pdf ? "Regenerate Pdf" : "Generate Pdf"}
@@ -199,7 +211,13 @@ const InvoiceDetails = () => {
                   colorScheme="primary"
                   isDisabled={invoiceDetails.pdf ? false : true}
                 >
-                  <Text ml={"2px"}>
+                  <Text ml={"2px"} display={"flex"} alignItems={"center"}>
+                    <FaDownload
+                      color="#fff"
+                      style={{
+                        marginRight: 4,
+                      }}
+                    />
                     <a href={invoiceDetails?.pdf} target="_blank">
                       Download Pdf
                     </a>
@@ -219,7 +237,12 @@ const InvoiceDetails = () => {
               {/* <Link to={`/invoice/payment/${id}`}> */}
               <Button colorScheme="primary" onClick={handleOpenModal}>
                 {" "}
-                <FaPlus color="#fff" />{" "}
+                <FaPlus
+                  color="#fff"
+                  style={{
+                    marginRight: 4,
+                  }}
+                />{" "}
                 <Text ml={"2px"}>Enter new payment</Text>
               </Button>
               {/* </Link> */}
@@ -256,13 +279,15 @@ const InvoiceDetails = () => {
               ) : (
                 <VStack align="stretch" spacing="2">
                   {invoicePayments?.payments?.map((payment, index) => (
-                    <Box key={index} p={2} bg="primary.500" color={"#FFF"}>
+                    <Box key={index} p={2} bg="gray.100" color={"#FFF"}>
                       <HStack justifyContent="space-between">
-                        <Text>
+                        <Text color="primary.500" fontWeight={500}>
                           {new Date(payment.date).toLocaleDateString()}
                         </Text>
-                        <Text>{payment.paymentMethod}</Text>
-                        <Text>
+                        <Text color="primary.500" fontWeight={500}>
+                          {payment.paymentMethod}
+                        </Text>
+                        <Text color="primary.500" fontWeight={500}>
                           NGN {convertNumberToCurrencyFormat(payment.amount)}
                         </Text>
                       </HStack>

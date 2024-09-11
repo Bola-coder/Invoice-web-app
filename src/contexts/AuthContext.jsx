@@ -12,20 +12,6 @@ export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// function getCookie(name) {
-//   const cookieString = document.cookie;
-//   console.log(cookieString);
-//   const cookies = cookieString.split("; ");
-//   console.log(cookies);
-//   for (let i = 0; i < cookies.length; i++) {
-//     const cookie = cookies[i].split("=");
-//     if (cookie[0] === name) {
-//       return decodeURIComponent(cookie[1]);
-//     }
-//   }
-//   return null;
-// }
-
 const AuthProvider = ({ children }) => {
   const navigation = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -53,7 +39,6 @@ const AuthProvider = ({ children }) => {
     checkAuthStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  //   console.log(token);
 
   const signup = (email, firstname, lastname, password, phoneNumber) => {
     const body = {
@@ -151,7 +136,6 @@ const AuthProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((response) => {
-        // console.log(response);
         if (response.data.status === "success") {
           //   console.log("Heyy true oo");
           setIsAuthenticated(true);

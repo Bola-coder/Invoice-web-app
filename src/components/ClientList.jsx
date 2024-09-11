@@ -1,9 +1,16 @@
 /* eslint-disable react/prop-types */
-import { Flex, Box, Text, Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { Flex, Box, Text, Button, useDisclosure } from "@chakra-ui/react";
+import { useClientContext } from "../contexts/ClientContext";
+import ClientDetails from "./ClientDetails";
 
 const ClientList = ({ clients }) => {
-  const navigate = useNavigate();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { clientDetails, getClientDetails } = useClientContext();
+
+  const handleGetClientDetails = async (id) => {
+    await getClientDetails(id);
+    onOpen();
+  };
   return (
     <Box mt={"5%"} bg={"#FFF"} borderRadius={"12px"}>
       <Box>
@@ -41,7 +48,7 @@ const ClientList = ({ clients }) => {
                 //   borderRadius: "12px",
                 // }}
                 cursor={"pointer"}
-                onClick={() => navigate(`/client/${client._id}`)}
+                onClick={() => handleGetClientDetails(client._id)}
               >
                 <Text fontSize={"14px"} flexBasis={"18%"}>
                   {client.namelength > 15
@@ -67,6 +74,13 @@ const ClientList = ({ clients }) => {
             </Box>
           ))}
       </Box>
+      <Flex justifyContent={"center"} alignItems={"center"}>
+        <ClientDetails
+          isOpen={isOpen}
+          onClose={onClose}
+          client={clientDetails}
+        />
+      </Flex>
     </Box>
   );
 };

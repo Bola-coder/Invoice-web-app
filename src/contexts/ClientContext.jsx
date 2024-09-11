@@ -14,6 +14,7 @@ const ClientProvider = ({ children }) => {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [clients, setClients] = useState([]);
+  const [clientDetails, setClientDetails] = useState(null);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const ClientProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setClients(res.data.data.clients);
         setLoading(false);
       })
@@ -56,7 +57,7 @@ const ClientProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         fetchClients();
         setLoading(false);
         navigate("/client");
@@ -70,7 +71,38 @@ const ClientProvider = ({ children }) => {
       });
   };
 
-  const values = { clients, fetchClients, loading, createClient };
+  const getClientDetails = async (clientId) => {
+    setLoading(true);
+    setClientDetails({});
+    axios
+      .get(`${apiUrl}/clients/${clientId}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        // console.log(res.data.data);
+        setClientDetails(res.data.data.client);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const values = {
+    clients,
+    clientDetails,
+    fetchClients,
+    loading,
+    createClient,
+    getClientDetails,
+  };
   return (
     <ClientContext.Provider value={values}>{children}</ClientContext.Provider>
   );
