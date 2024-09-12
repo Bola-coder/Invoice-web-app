@@ -57,7 +57,7 @@ const ClientProvider = ({ children }) => {
         withCredentials: true,
       })
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data);
         fetchClients();
         setLoading(false);
         navigate("/client");

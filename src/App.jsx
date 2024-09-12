@@ -20,6 +20,7 @@ import InvoicePaymentProvider from "./contexts/InvoicePaymentContext";
 
 function App() {
   // maxWidth={"1536px"}
+  document.title = "SwyftInvoice";
   return (
     <Box as="section" margin={"0 auto"}>
       <Router>

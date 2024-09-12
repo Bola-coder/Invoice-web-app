@@ -68,11 +68,38 @@ const InvoicePaymentProvider = ({ children }) => {
       });
   };
 
+  const sendPaymentReceipt = async (invoiceId) => {
+    console.log(invoiceId);
+    setLoading(true);
+    axios
+      .get(`${apiUrl}/invoicePayment/${invoiceId}/receipt`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        toast({
+          title: "Receipt sent successfully",
+          status: "success",
+          message: res.data.message,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const values = {
     invoicePayments,
     loading,
     getInvoicePayments,
     createNewPayment,
+    sendPaymentReceipt,
   };
   return (
     <InvoicePaymentContext.Provider value={values}>

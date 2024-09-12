@@ -36,6 +36,7 @@ const InvoiceDetails = () => {
     invoicePayments,
     getInvoicePayments,
     createNewPayment,
+    sendPaymentReceipt,
   } = useInvoicePaymentContext();
 
   const handleOpenModal = () => {
@@ -295,6 +296,21 @@ const InvoiceDetails = () => {
                   ))}
                 </VStack>
               )}
+              <Box display={"flex"} justifyContent={"flex-end"}>
+                <Button
+                  bg={"primary.500"}
+                  mt={"20px"}
+                  color={"white"}
+                  size={"lg"}
+                  _hover={{
+                    opacity: 0.9,
+                  }}
+                  disabled={invoicePaymentLoading}
+                  onClick={() => sendPaymentReceipt(invoiceDetails._id)}
+                >
+                  Send Payment Receipt To Client
+                </Button>
+              </Box>
             </Box>
           </Box>
         </Box>
