@@ -20,7 +20,7 @@ const ClientDetails = ({ isOpen, onClose, client }) => {
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
       {/* Modal */}
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Client Details</ModalHeader>

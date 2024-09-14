@@ -48,8 +48,8 @@ const SideNav = () => {
                       href={route.path}
                       color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
                       display={"block"}
-                      _hover={{ textDecoration: "none" }}
-                      fontSize={"16px"}
+                      _hover={{ textDecoration: "none", color: "#BFDB38" }}
+                      fontSize={"20px"}
                       fontWeight={isActivePath(route.path) ? 600 : 400}
                     >
                       {route.name}
@@ -78,7 +78,7 @@ const SideNav = () => {
                       color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
                       display={"block"}
                       _hover={{ textDecoration: "none" }}
-                      fontSize={"16px"}
+                      fontSize={"20px"}
                       fontWeight={isActivePath(route.path) ? 600 : 400}
                     >
                       {route.name}

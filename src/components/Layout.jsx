@@ -4,10 +4,10 @@ import SideNav from "./SideNav";
 const Layout = ({ children }) => {
   return (
     <Flex height={"100vw"} maxHeight={"100vh"} overflowY={"hidden"}>
-      <Box flexBasis={"20%"} height={"100vh"}>
+      <Box flexBasis={"15%"} height={"100vh"}>
         <SideNav />
       </Box>
-      <Box flexBasis={"80%"} overflowY={"scroll"}>
+      <Box flexBasis={"85%"} overflowY={"scroll"}>
         {children}
       </Box>
     </Flex>

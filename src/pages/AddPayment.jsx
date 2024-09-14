@@ -77,7 +77,7 @@ const AddPayment = ({
       {/* <Button colorScheme="primary" onClick={() => isOpen}>
         Open Invoice Payment Modal
       </Button> */}
-      <Modal isOpen={isOpen} onClose={handleClose}>
+      <Modal isOpen={isOpen} onClose={handleClose} isCentered size={"xl"}>
         <ModalOverlay />
         <ModalContent fontFamily={"IBM Plex Sans"}>
           <ModalHeader>Create Invoice Payment</ModalHeader>

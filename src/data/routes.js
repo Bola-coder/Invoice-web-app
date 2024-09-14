@@ -36,8 +36,8 @@ const routes = [
     position: "top",
   },
   {
-    name: "Receipt",
-    path: "/receipt",
+    name: "Companies",
+    path: "/companies",
     icon: receipt,
     activeIcon: receipt_active,
     position: "top",

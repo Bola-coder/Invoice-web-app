@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const InvoiceList = ({ displayTitle, invoices }) => {
   const navigate = useNavigate();
   return (
-    <Box mt={"5%"} bg={"#FFF"} borderRadius={"12px"}>
+    <Box mt={"5%"} bg={"#FFF"} borderRadius={"6px"}>
       {displayTitle && (
         <Box padding={"10px"}>
           <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
@@ -23,13 +23,21 @@ const InvoiceList = ({ displayTitle, invoices }) => {
         </Box>
       )}
 
-      <Box>
+      <Box
+        background={"#fff"}
+        // padding={"10px"}
+        // width={"98%"}
+        margin={"auto"}
+        border={"1px solid #e0e0e0"}
+        borderRadius={"6px"}
+      >
         <Flex
           justifyContent={"space-between"}
           alignItems={"center"}
-          borderBottom={"1px solid gray"}
+          borderBottom={"1px solid #e0e0e0"}
+          backgroundColor={"#f2f2f2"}
           // mb={"10px"}
-          padding={"10px"}
+          padding={"20px"}
           cursor={"pointer"}
         >
           <Text fontSize={"14px"} fontWeight={500} flexBasis={"10%"}>
@@ -54,9 +62,9 @@ const InvoiceList = ({ displayTitle, invoices }) => {
         {invoices &&
           invoices.map((invoice) => (
             <Box
-              padding={"10px"}
+              padding={"20px"}
               key={invoice._id}
-              borderBottom={"1px solid gray"}
+              borderBottom={"1px solid #e0e0e0"}
             >
               <Flex
                 justifyContent={"space-between"}
@@ -72,9 +80,8 @@ const InvoiceList = ({ displayTitle, invoices }) => {
                 <Text
                   fontSize={"14px"}
                   flexBasis={"12%"}
-                  color={
-                    invoice.status === "Paid" ? "primary.500" : "primary.100"
-                  }
+                  color={invoice.status === "Paid" ? "primary.500" : "#b2a900"}
+                  fontWeight={600}
                 >
                   {invoice.status}
                 </Text>
