@@ -14,7 +14,12 @@ import { Box, Text } from "@chakra-ui/react";
 const PaymentStatChart = ({ data }) => {
   return (
     <Box mt={"2%"} width={"50%"} maxWidth={"50%"}>
-      <Text>Payment Stats (30 days)</Text>
+      <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
+        Payment Stats (30 days)
+      </Text>
+      <Text as={"p"} fontSize={"14px"} fontWeight={500} color={"text.coral"}>
+        Visualize your money in and out
+      </Text>
       <BarChart
         width={500}
         height={300}

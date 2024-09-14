@@ -17,6 +17,7 @@ import InvoiceDetails from "./pages/InvoiceDetails";
 import EditInvoice from "./pages/EditInvoice";
 import InvoicePaymentProvider from "./contexts/InvoicePaymentContext";
 import SubscriptionProvider from "./contexts/Subscription";
+import SubscriptionRoutes from "./components/SubscriptionRoutes";
 // import SubscriptionPage from "./pages/Subscription";
 // import PaymentPage from "./pages/Payment";
 
@@ -40,7 +41,6 @@ function App() {
                       <Route path="/" element={<Dashboard />} />
                       <Route path="/invoice" element={<Invoice />} />
                       <Route path="/client" element={<Client />} />
-                      <Route path="/companies" element={<Companies />} />
                       <Route path="/payment" element={<Payment />} />
                       <Route
                         path="/create-invoice"
@@ -52,11 +52,11 @@ function App() {
                         path="/invoice/edit/:id"
                         element={<EditInvoice />}
                       />
-                      {/* <Route
-                        path="/subscription"
-                        element={<SubscriptionPage />}
-                      />
-                      <Route path="/payment" element={<PaymentPage />} /> */}
+
+                      {/* Premium Subscription plan routes */}
+                      <Route element={<SubscriptionRoutes />}>
+                        <Route path="/companies" element={<Companies />} />
+                      </Route>
                     </Route>
                   </Routes>
                 </InvoicePaymentProvider>

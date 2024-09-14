@@ -35,7 +35,7 @@ const Dashboard = () => {
     getInvoices();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const recentInvoice = invoices.slice(0, 5);
+  const recentInvoice = invoices.slice(0, 10);
 
   // if (!Object.keys(invoiceStats).length) return null;
 
@@ -51,9 +51,12 @@ const Dashboard = () => {
           {graphicalView ? (
             <PaymentStatChart data={paymentStats} />
           ) : (
-            <DashboardStats invoiceStats={invoiceStats} />
+            <Box>
+              <DashboardStats invoiceStats={invoiceStats} />
+              <PaymentStatChart data={paymentStats} />
+            </Box>
           )}
-          <Flex justifyContent={"space-between"}>
+          <Flex justifyContent={"space-between"} alignItems={"flex-start"}>
             <Box width={"60%"}>
               <InvoiceList displayTitle={true} invoices={recentInvoice} />
             </Box>

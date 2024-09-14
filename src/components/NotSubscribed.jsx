@@ -13,12 +13,15 @@ import {
   ListItem,
   ListIcon,
   Flex,
+  Box,
 } from "@chakra-ui/react";
 import { MdCheckCircle } from "react-icons/md";
 import { InfoIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 import dashboardImage from "./../assets/images/dashboard.png";
 
 const NotSubscribed = ({ isOpen, onClose, initializePayment }) => {
+  const navigate = useNavigate();
   const handleSubscribe = async () => {
     await initializePayment({
       amount: 2000,
@@ -30,9 +33,18 @@ const NotSubscribed = ({ isOpen, onClose, initializePayment }) => {
     <Modal isOpen={isOpen} onClose={onClose} size={"lg"} isCentered>
       <ModalOverlay />
       <ModalContent fontFamily={"IBM Plex Sans"}>
-        <ModalHeader display="flex" alignItems="center">
-          <InfoIcon color="primary.500" mr={2} />
-          <Text textAlign={"left"}>Upgrade to Premium</Text>
+        <ModalHeader
+          display="flex"
+          justifyContent={"space-between"}
+          alignItems="center"
+        >
+          <Box display={"flex"} alignItems={"center"}>
+            <InfoIcon color="primary.500" mr={2} />
+            <Text textAlign={"left"}>Upgrade to Premium</Text>
+          </Box>
+          <Button colorScheme="primary" onClick={() => navigate(-1)}>
+            Close
+          </Button>
         </ModalHeader>
         <ModalBody textAlign="left">
           <Image src={dashboardImage} alt="Premium Content" mb={4} />

@@ -154,6 +154,29 @@ const AuthProvider = ({ children }) => {
       });
   };
 
+  const logout = async () => {
+    axios
+      .get(`${apiUrl}/auth/logout`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res);
+        setIsAuthenticated(false);
+        navigation("/login");
+        toast({
+          status: "success",
+          description: "Logout successful",
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          status: "error",
+          description: "Logout unsuccessful",
+        });
+      });
+  };
+
   const values = {
     isAuthenticated,
     user,
@@ -161,6 +184,7 @@ const AuthProvider = ({ children }) => {
     signup,
     login,
     checkAuthenticationStatus,
+    logout,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;

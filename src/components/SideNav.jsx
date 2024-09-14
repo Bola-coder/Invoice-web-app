@@ -1,10 +1,13 @@
-import { Flex, Box, Image, Text } from "@chakra-ui/react";
+import { Flex, Box, Image, Text, Button } from "@chakra-ui/react";
 import routes from "../data/routes";
 import { NavLink, useLocation } from "react-router-dom";
+import { MdLogout } from "react-icons/md";
+import { useAuth } from "../contexts/AuthContext";
 
 const SideNav = () => {
   const location = useLocation();
   const isActivePath = (path) => location.pathname === path;
+  const { logout } = useAuth();
 
   return (
     <Box
@@ -87,6 +90,25 @@ const SideNav = () => {
                 </NavLink>
               )
           )}
+          <Box p={4} display={"flex"} alignItems={"center"}>
+            <Button variant={"outline"} onClick={logout}>
+              <MdLogout
+                size={"20"}
+                color="#BFDB38"
+                style={{ marginRight: "5px" }}
+              />
+              <Text
+                as={"span"}
+                color="#BFDB38"
+                display={"block"}
+                _hover={{ textDecoration: "none" }}
+                fontSize={"20px"}
+                fontWeight={500}
+              >
+                Logout
+              </Text>
+            </Button>
+          </Box>
         </Box>
       </Flex>
     </Box>
