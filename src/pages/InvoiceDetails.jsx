@@ -77,8 +77,8 @@ const InvoiceDetails = () => {
 
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
-      <Layout>
-        <Box padding={"3%"}>
+      <Layout title={"Invoice Details"}>
+        <Box>
           {/* Invoice Details */}
           <Box>
             {/* Header */}

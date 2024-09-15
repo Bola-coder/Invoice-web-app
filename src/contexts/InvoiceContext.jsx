@@ -86,6 +86,32 @@ const InvoiceProvider = ({ children }) => {
       });
   };
 
+  const createCompanyInvoice = async (invoice) => {
+    setLoading(true);
+    axios
+      .post(`${apiUrl}/invoices/company/create`, invoice, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        // console.log(res.data);
+        getAllInvoices();
+        setLoading(false);
+        toast({
+          title: "Invoice created.",
+          description: "Invoice has been created successfully.",
+          status: "success",
+        });
+        navigate("/invoice");
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  };
+
   const getInvoiceDetails = async (id) => {
     setLoading(true);
     setInvoiceDetails({});
@@ -230,6 +256,7 @@ const InvoiceProvider = ({ children }) => {
     paymentStats,
     getAllInvoices,
     createInvoice,
+    createCompanyInvoice,
     getInvoiceDetails,
     updateInvoice,
     getInvoiceStats,

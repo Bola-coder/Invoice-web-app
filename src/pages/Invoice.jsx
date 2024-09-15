@@ -44,12 +44,12 @@ const Invoice = () => {
 
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
-      <Layout>
-        <Box padding={"3%"}>
+      <Layout title={"Invoice"}>
+        <Box>
           {/* Header */}
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
-              Invoices
+              All Invoices
             </Text>
             <Link to={"/create-invoice"}>
               <Button colorScheme="primary">

@@ -15,20 +15,25 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useClientContext } from "../contexts/ClientContext";
 import { useInvoiceContext } from "../contexts/InvoiceContext";
+import { useCompanyContext } from "../contexts/CompanyContext";
+import { useSubscriptionContext } from "../contexts/Subscription";
 import Layout from "../components/Layout";
 
 const CreateInvoice = () => {
   const { clients } = useClientContext();
-  console.log(clients);
-  const { loading, createInvoice } = useInvoiceContext();
+  const { loading, createInvoice, createCompanyInvoice } = useInvoiceContext();
+  const { companies } = useCompanyContext();
+  const { isSubscribed } = useSubscriptionContext();
   const formik = useFormik({
     initialValues: {
+      company: "",
       client: "",
       invoiceDate: "",
       dueDate: "",
       items: [{ itemName: "", quantity: 0, price: 0 }],
     },
     validationSchema: Yup.object({
+      company: Yup.string().required("Company is required"),
       client: Yup.string().required("Client is required"),
       invoiceDate: Yup.date().required("Invoice date is required"),
       dueDate: Yup.date().required("Due date is required"),
@@ -46,7 +51,11 @@ const CreateInvoice = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      createInvoice(values);
+      if (values.company === "") {
+        createInvoice(values);
+      } else {
+        createCompanyInvoice(values);
+      }
       formik.resetForm();
     },
   });
@@ -68,13 +77,35 @@ const CreateInvoice = () => {
 
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
-      <Layout>
-        <Box padding={"3%"}>
+      <Layout title={"Create Invoice"}>
+        <Box>
           <Text as={"h2"} fontSize={"20px"} fontWeight={500} mb={"10px"}>
             Create Invoice
           </Text>
           <Box p={6} borderRadius="md" bg="white" boxShadow="md">
             <form onSubmit={formik.handleSubmit}>
+              {isSubscribed && (
+                <FormControl mt={4}>
+                  <FormLabel>Company</FormLabel>
+                  <Select
+                    id="company"
+                    name="company"
+                    value={formik.values.company}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    placeholder="Select company"
+                  >
+                    {companies.map((company) => (
+                      <option key={company._id} value={company._id}>
+                        {company.name}
+                      </option>
+                    ))}
+                  </Select>
+                  {formik.touched.client && formik.errors.client && (
+                    <Text color="red">{formik.errors.client}</Text>
+                  )}
+                </FormControl>
+              )}
               <FormControl mt={4}>
                 <FormLabel>Client</FormLabel>
                 <Select

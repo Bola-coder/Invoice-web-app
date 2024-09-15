@@ -17,8 +17,8 @@ import paystackImage from "./../assets/images/paystack.jpeg";
 
 const SubscriptionPage = () => {
   return (
-    <Layout>
-      <Box p={"3%"} fontFamily={"IBM Plex Sans"}>
+    <Layout title={"Subscription"}>
+      <Box fontFamily={"IBM Plex Sans"}>
         {/* Header Section */}
         <Flex direction="column" mb={10}>
           <Heading as="h1" size="2xl" mb={4} color={"primary.500"}>

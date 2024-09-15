@@ -18,6 +18,8 @@ import EditInvoice from "./pages/EditInvoice";
 import InvoicePaymentProvider from "./contexts/InvoicePaymentContext";
 import SubscriptionProvider from "./contexts/Subscription";
 import SubscriptionRoutes from "./components/SubscriptionRoutes";
+import CompanyProvider from "./contexts/CompanyContext";
+import CompanyDetails from "./pages/CompanyDetails";
 // import SubscriptionPage from "./pages/Subscription";
 // import PaymentPage from "./pages/Payment";
 
@@ -29,39 +31,51 @@ function App() {
       <Router>
         <AuthProvider>
           <SubscriptionProvider>
-            <ClientProvider>
-              <InvoiceProvider>
-                <InvoicePaymentProvider>
-                  <Routes>
-                    <Route path="/signup" element={<Signup />} />
-                    <Route path="/login" element={<Login />} />
+            <CompanyProvider>
+              <ClientProvider>
+                <InvoiceProvider>
+                  <InvoicePaymentProvider>
+                    <Routes>
+                      <Route path="/signup" element={<Signup />} />
+                      <Route path="/login" element={<Login />} />
 
-                    {/* Protected Routes */}
-                    <Route element={<ProtectedRoutes />}>
-                      <Route path="/" element={<Dashboard />} />
-                      <Route path="/invoice" element={<Invoice />} />
-                      <Route path="/client" element={<Client />} />
-                      <Route path="/payment" element={<Payment />} />
-                      <Route
-                        path="/create-invoice"
-                        element={<CreateInvoice />}
-                      />
-                      <Route path="/create-client" element={<CreateClient />} />
-                      <Route path="/invoice/:id" element={<InvoiceDetails />} />
-                      <Route
-                        path="/invoice/edit/:id"
-                        element={<EditInvoice />}
-                      />
+                      {/* Protected Routes */}
+                      <Route element={<ProtectedRoutes />}>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/invoice" element={<Invoice />} />
+                        <Route path="/client" element={<Client />} />
+                        <Route path="/payment" element={<Payment />} />
+                        <Route
+                          path="/create-invoice"
+                          element={<CreateInvoice />}
+                        />
+                        <Route
+                          path="/create-client"
+                          element={<CreateClient />}
+                        />
+                        <Route
+                          path="/invoice/:id"
+                          element={<InvoiceDetails />}
+                        />
+                        <Route
+                          path="/invoice/edit/:id"
+                          element={<EditInvoice />}
+                        />
 
-                      {/* Premium Subscription plan routes */}
-                      <Route element={<SubscriptionRoutes />}>
-                        <Route path="/companies" element={<Companies />} />
+                        {/* Premium Subscription plan routes */}
+                        <Route element={<SubscriptionRoutes />}>
+                          <Route path="/companies" element={<Companies />} />
+                          <Route
+                            path="/company/:id"
+                            element={<CompanyDetails />}
+                          />
+                        </Route>
                       </Route>
-                    </Route>
-                  </Routes>
-                </InvoicePaymentProvider>
-              </InvoiceProvider>
-            </ClientProvider>
+                    </Routes>
+                  </InvoicePaymentProvider>
+                </InvoiceProvider>
+              </ClientProvider>
+            </CompanyProvider>
           </SubscriptionProvider>
         </AuthProvider>
       </Router>

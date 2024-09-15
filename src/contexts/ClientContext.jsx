@@ -71,6 +71,30 @@ const ClientProvider = ({ children }) => {
       });
   };
 
+  const createCompanyClient = async (client) => {
+    setLoading(true);
+    axios
+      .post(`${apiUrl}/clients/company/create`, client, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+        fetchClients();
+        setLoading(false);
+        navigate("/client");
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   const getClientDetails = async (clientId) => {
     setLoading(true);
     setClientDetails({});
@@ -101,6 +125,7 @@ const ClientProvider = ({ children }) => {
     fetchClients,
     loading,
     createClient,
+    createCompanyClient,
     getClientDetails,
   };
   return (

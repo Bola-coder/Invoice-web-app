@@ -141,7 +141,7 @@ const Login = () => {
         </form>
         <Box mt={8} display={"flex"} justifyContent={"flex-end"}>
           <Text as="p" fontWeight={500} fontSize={20}>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Text as={"span"} color={"primary.500"} fontWeight={600}>
               <Link to={"/signup"}>Register</Link>
             </Text>

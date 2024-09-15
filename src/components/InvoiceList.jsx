@@ -7,7 +7,7 @@ const InvoiceList = ({ displayTitle, invoices }) => {
   const navigate = useNavigate();
 
   return (
-    <Box mt={"5%"}>
+    <Box mt={"2%"}>
       {displayTitle && (
         <Box padding={"10px"} mb={2}>
           <Text as={"h2"} fontSize={"20px"} fontWeight={500}>

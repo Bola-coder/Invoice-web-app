@@ -140,8 +140,8 @@ const EditInvoice = () => {
 
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
-      <Layout>
-        <Box padding={"3%"}>
+      <Layout title={"Edit Invoice"}>
+        <Box>
           <Text as={"h2"} fontSize={"20px"} fontWeight={500} mb={"10px"}>
             Edit Invoice
           </Text>

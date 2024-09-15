@@ -13,7 +13,12 @@ const ClientList = ({ clients }) => {
   };
 
   return (
-    <Box mt={"5%"} bg={"#FFF"} borderRadius={"12px"}>
+    <Box
+      mt={"2%"}
+      bg={"#FFF"}
+      borderRadius={"12px"}
+      border={"1px solid #e0e0e0"}
+    >
       {/* Header */}
       <Box
         display="grid"

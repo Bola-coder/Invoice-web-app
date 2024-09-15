@@ -17,21 +17,24 @@ const SideNav = () => {
       height={"100%"}
       maxHeight={"100%"}
       overflowY={"hidden"}
+      shadow={"lg"}
     >
-      <Text
-        as={"h1"}
-        color={"primary.100"}
-        fontSize={"32px"}
-        fontWeight={600}
-        // textAlign={"center"}
-        paddingTop={"10%"}
-        px={4}
-      >
-        Swyft
-        <Text as={"span"} color={"#FFF"}>
-          Invoice
+      <Box height={"8vh"} maxHeight={"8vh"}>
+        <Text
+          as={"h1"}
+          color={"primary.100"}
+          fontSize={"32px"}
+          fontWeight={600}
+          // textAlign={"center"}
+          // paddingTop={"10%"}
+          p={4}
+        >
+          Swyft
+          <Text as={"span"} color={"#FFF"}>
+            Invoice
+          </Text>
         </Text>
-      </Text>
+      </Box>
       <Flex justifyContent={"space-between"} flexDir={"column"} height={"90%"}>
         <Box mt={"10px"}>
           {routes.map(

@@ -19,14 +19,17 @@ const Client = () => {
 
   // console.log("Clients", clients);
   if (loading) {
-    <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
-      <Spinner size="xl" color="primary" />
-    </Flex>;
+    <Layout title={"Clients"}>
+      <Flex justifyContent={"center"} alignItems={"center"} height={"100vh"}>
+        <Spinner size="xl" color="primary" />
+      </Flex>
+      ;
+    </Layout>;
   }
   return (
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
-      <Layout>
-        <Box padding={"3%"}>
+      <Layout title={"Clients"}>
+        <Box>
           {/* Header */}
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Text as={"h2"} fontSize={"20px"} fontWeight={500}>

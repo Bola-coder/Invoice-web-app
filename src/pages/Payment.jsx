@@ -3,8 +3,8 @@ import Layout from "../components/Layout";
 
 const PaymentPage = () => {
   return (
-    <Layout>
-      <Flex justifyContent="center" p={8} fontFamily="IBM Plex Sans">
+    <Layout title={"Payment"}>
+      <Flex justifyContent="center" fontFamily="IBM Plex Sans">
         <Box w="80%" textAlign="center">
           <Heading as="h1" size="2xl" mb={4} color={"primary.500"}>
             Complete Your Payment
