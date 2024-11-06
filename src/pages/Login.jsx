@@ -52,29 +52,31 @@ const Login = () => {
   });
   return (
     <Box
-      padding={"3%"}
+      padding={{ base: "5%", sm: "3%" }}
       fontFamily={"IBM Plex Sans"}
-      width={"50%"}
+      width={{ base: "100%", sm: "90%", md: "50%" }}
       margin={"auto"}
-      marginTop={"5%"}
+      marginTop={{ base: "20%", md: "10%" }}
       bg={"primary.500"}
       borderRadius={"12px"}
     >
       <Text
         as={"h2"}
-        fontSize={"20px"}
+        fontSize={{ base: "16px", sm: "20px" }}
         fontWeight={500}
         mb={"10px"}
         color={"#FFF"}
+        textAlign={"left"}
       >
         Login to SwyftInvoice
       </Text>
       <Text
         as={"p"}
-        fontSize={"14px"}
+        fontSize={{ base: "14px", sm: "16px" }}
         fontWeight={400}
-        mb={"10px"}
+        mb={{ base: "10px", sm: "20px" }}
         color={"#FFF"}
+        textAlign={"left"}
       >
         Login to your account and continue making stress free invoices
       </Text>
@@ -139,8 +141,18 @@ const Login = () => {
             </Button>
           </Flex>
         </form>
-        <Box mt={8} display={"flex"} justifyContent={"flex-end"}>
-          <Text as="p" fontWeight={500} fontSize={20}>
+        <Box
+          mt={8}
+          display={"flex"}
+          justifyContent={{ base: "center", md: "flex-end" }}
+        >
+          {" "}
+          <Text
+            as="p"
+            fontWeight={500}
+            fontSize={{ base: "16px", sm: "18px", md: "20px" }}
+            textAlign={{ base: "center", md: "right" }}
+          >
             Don&apos;t have an account?{" "}
             <Text as={"span"} color={"primary.500"} fontWeight={600}>
               <Link to={"/signup"}>Register</Link>

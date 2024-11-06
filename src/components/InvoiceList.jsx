@@ -10,12 +10,16 @@ const InvoiceList = ({ displayTitle, invoices }) => {
     <Box mt={"2%"}>
       {displayTitle && (
         <Box padding={"10px"} mb={2}>
-          <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
+          <Text
+            as={"h2"}
+            fontSize={{ base: "16px", md: "20px" }}
+            fontWeight={500}
+          >
             Invoices
           </Text>
           <Text
             as={"p"}
-            fontSize={"14px"}
+            fontSize={{ base: "12px", md: "14px" }}
             fontWeight={500}
             color={"text.coral"}
           >
@@ -29,37 +33,36 @@ const InvoiceList = ({ displayTitle, invoices }) => {
         margin={"auto"}
         border={"1px solid #e0e0e0"}
         borderRadius={"12px"}
+        overflowX="auto" // Ensures horizontal scroll on smaller screens
       >
         {/* Header */}
         <Box
           display="grid"
-          gridTemplateColumns="1fr 1.5fr 1fr 1fr 1fr 1fr"
+          gridTemplateColumns={{
+            base: "1fr 1.5fr", // 2 columns on mobile screens
+            sm: "1fr 1.5fr 1fr", // 3 columns on small screens
+            md: "1fr 1.5fr 1fr 1fr", // 4 columns on medium screens
+            lg: "1fr 1.5fr 1fr 1fr 1fr 1fr", // 6 columns on large screens
+          }}
           alignItems="center"
           borderBottom={"1px solid #efeded"}
           backgroundColor={"#FCFDFD"}
           padding={"20px"}
           borderRadius={"12px"}
+          fontSize={{ base: "12px", md: "14px" }} // Responsive text size
         >
-          <Text fontSize={"14px"} fontWeight={500}>
-            Invoice Number
-          </Text>
-
-          <Text fontSize={"14px"} fontWeight={500}>
-            Client Name
-          </Text>
-
-          <Text fontSize={"14px"} fontWeight={500}>
+          <Text fontWeight={500}>Invoice Number</Text>
+          <Text fontWeight={500}>Client Name</Text>
+          <Text fontWeight={500} display={{ base: "none", sm: "block" }}>
             Total Amount
           </Text>
-
-          <Text fontSize={"14px"} fontWeight={500}>
+          <Text fontWeight={500} display={{ base: "none", md: "block" }}>
             Amount Paid
           </Text>
-
-          <Text fontSize={"14px"} fontWeight={500}>
+          <Text fontWeight={500} display={{ base: "none", lg: "block" }}>
             Status
           </Text>
-          <Text fontSize={"14px"} fontWeight={500}>
+          <Text fontWeight={500} display={{ base: "none", lg: "block" }}>
             Due Date
           </Text>
         </Box>
@@ -75,28 +78,30 @@ const InvoiceList = ({ displayTitle, invoices }) => {
             >
               <Box
                 display="grid"
-                gridTemplateColumns="1fr 1.5fr 1fr 1fr 1fr 1fr"
+                gridTemplateColumns={{
+                  base: "1fr 1.5fr", // 2 columns on mobile screens
+                  sm: "1fr 1.5fr 1fr", // 3 columns on small screens
+                  md: "1fr 1.5fr 1fr 1fr", // 4 columns on medium screens
+                  lg: "1fr 1.5fr 1fr 1fr 1fr 1fr", // 6 columns on large screens
+                }}
                 alignItems="center"
                 padding={"20px"}
+                fontSize={{ base: "12px", md: "14px" }} // Responsive text size
               >
-                <Text fontSize={"14px"}>{invoice.invoiceNumber}</Text>
-
-                <Text fontSize={"14px"}>
+                <Text>{invoice.invoiceNumber}</Text>
+                <Text>
                   {invoice.client?.name.length > 30
                     ? `${invoice.client?.name.slice(0, 30)}...`
                     : invoice.client?.name}
                 </Text>
-
-                <Text fontSize={"14px"}>
+                <Text display={{ base: "none", sm: "block" }}>
                   NGN {convertNumberToCurrencyFormat(invoice.total)}
                 </Text>
-
-                <Text fontSize={"14px"}>
+                <Text display={{ base: "none", md: "block" }}>
                   NGN {convertNumberToCurrencyFormat(invoice.amountPaid)}
                 </Text>
-
                 <Text
-                  fontSize={"14px"}
+                  display={{ base: "none", lg: "block" }}
                   color={invoice.status === "paid" ? "#00B69B" : "#6226EF"}
                   backgroundColor={
                     invoice.status === "paid" ? "#ccf0eb" : "#e0d4fc"
@@ -110,8 +115,7 @@ const InvoiceList = ({ displayTitle, invoices }) => {
                 >
                   {invoice.status}
                 </Text>
-
-                <Text fontSize={"14px"}>
+                <Text display={{ base: "none", lg: "block" }}>
                   {new Date(invoice.dueDate).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",

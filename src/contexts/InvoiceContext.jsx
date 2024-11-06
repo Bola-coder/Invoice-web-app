@@ -61,6 +61,7 @@ const InvoiceProvider = ({ children }) => {
   };
 
   const createInvoice = async (invoice) => {
+    console.log("Yayy");
     setLoading(true);
     axios
       .post(`${apiUrl}/invoices`, invoice, {

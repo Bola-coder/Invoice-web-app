@@ -8,8 +8,6 @@ import {
   Button,
   Text,
   Spinner,
-  //   useToast,
-  //   Select,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -19,7 +17,6 @@ import { useAuth } from "../contexts/AuthContext";
 import useShowPassword from "../hooks/useShowPassword";
 
 const Signup = () => {
-  //   const toast = useToast();
   const navigate = useNavigate();
   const { showPassword, handleShowPassword } = useShowPassword();
   const { loading, signup, isAuthenticated } = useAuth();
@@ -28,8 +25,8 @@ const Signup = () => {
     if (isAuthenticated) {
       navigate("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigate]);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -45,7 +42,7 @@ const Signup = () => {
       firstname: Yup.string().required("First name is required"),
       lastname: Yup.string().required("Last name is required"),
       phoneNumber: Yup.string()
-        .matches(/^\d{11}$/, "Invalid phone number (10 digits)")
+        .matches(/^\d{11}$/, "Invalid phone number (11 digits)")
         .required("Phone number is required"),
       password: Yup.string()
         .min(8, "Password must be at least 8 characters")
@@ -63,33 +60,36 @@ const Signup = () => {
       formik.resetForm();
     },
   });
+
   return (
     <Box
-      padding={"3%"}
+      padding={{ base: "5%", sm: "3%" }}
       fontFamily={"IBM Plex Sans"}
-      width={"50%"}
+      width={{ base: "100%", sm: "90%", md: "50%" }}
       margin={"auto"}
-      marginTop={"5%"}
+      marginTop={{ base: "20%", md: "10%" }}
       bg={"primary.500"}
       borderRadius={"12px"}
     >
       <Text
         as={"h2"}
-        fontSize={"20px"}
+        fontSize={{ base: "16px", sm: "20px" }}
         fontWeight={500}
         mb={"10px"}
         color={"#FFF"}
+        textAlign={{ base: "center", md: "left" }}
       >
         Signup to SwyftInvoice
       </Text>
       <Text
         as={"p"}
-        fontSize={"14px"}
+        fontSize={{ base: "14px", sm: "16px" }}
         fontWeight={400}
-        mb={"10px"}
+        mb={{ base: "10px", sm: "20px" }}
         color={"#FFF"}
+        textAlign={{ base: "center", md: "left" }}
       >
-        Create your account to get started with making stress free invoices
+        Create your account to get started with making stress-free invoices
       </Text>
       <Box p={6} borderRadius="md" bg="white" boxShadow="md">
         <form onSubmit={formik.handleSubmit}>
@@ -104,7 +104,6 @@ const Signup = () => {
               value={formik.values.firstname}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              //   required
             />
             {formik.touched.firstname && formik.errors.firstname && (
               <Text color="red">{formik.errors.firstname}</Text>
@@ -121,7 +120,6 @@ const Signup = () => {
               value={formik.values.lastname}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              //   required
             />
             {formik.touched.lastname && formik.errors.lastname && (
               <Text color="red">{formik.errors.lastname}</Text>
@@ -138,7 +136,6 @@ const Signup = () => {
               value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              //   required
             />
             {formik.touched.email && formik.errors.email && (
               <Text color="red">{formik.errors.email}</Text>
@@ -155,7 +152,6 @@ const Signup = () => {
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              //   required
             />
             <Button
               position={"absolute"}
@@ -186,14 +182,18 @@ const Signup = () => {
               value={formik.values.phoneNumber}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              //   required
             />
             {formik.touched.phoneNumber && formik.errors.phoneNumber && (
               <Text color="red">{formik.errors.phoneNumber}</Text>
             )}
           </FormControl>
-          <Flex justifyContent={"flex-end"}>
-            <Button mt={6} colorScheme="primary" type="submit">
+          <Flex justifyContent={{ base: "center", md: "flex-end" }}>
+            <Button
+              mt={6}
+              colorScheme="primary"
+              type="submit"
+              width={{ base: "100%", md: "auto" }}
+            >
               {loading ? (
                 <Spinner color="white" size={"md"} />
               ) : (
@@ -202,8 +202,17 @@ const Signup = () => {
             </Button>
           </Flex>
         </form>
-        <Box mt={8} display={"flex"} justifyContent={"flex-end"}>
-          <Text as="p" fontWeight={500} fontSize={20}>
+        <Box
+          mt={8}
+          display={"flex"}
+          justifyContent={{ base: "center", md: "flex-end" }}
+        >
+          <Text
+            as="p"
+            fontWeight={500}
+            fontSize={{ base: "16px", sm: "18px", md: "20px" }}
+            textAlign={{ base: "center", md: "right" }}
+          >
             Already have an account?{" "}
             <Text as={"span"} color={"primary.500"} fontWeight={600}>
               <Link to={"/login"}>Login</Link>

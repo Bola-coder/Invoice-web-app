@@ -12,6 +12,7 @@ const CompanyProvider = ({ children }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const [loading, setLoading] = useState([]);
+  const [logoLoading, setLogoLoading] = useState([]);
   const [companies, setCompanies] = useState([]);
   const [companyDetails, setCompanyDetails] = useState({});
 
@@ -57,12 +58,42 @@ const CompanyProvider = ({ children }) => {
       });
   };
 
+  const uploadCompanyLogo = async (id, logo) => {
+    setLogoLoading(true);
+    setCompanyDetails({});
+    axios
+      .patch(
+        `${apiUrl}/company/${id}/logo`,
+        {
+          logo,
+        },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res.data.data.company);
+        setCompanyDetails(res.data.data.company);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      })
+      .finally(() => {
+        setLogoLoading(false);
+      });
+  };
+
   const values = {
     loading,
+    logoLoading,
     companies,
     companyDetails,
     fetchCompanies,
     getCompanyDetails,
+    uploadCompanyLogo,
   };
   return (
     <CompanyContext.Provider value={values}>{children}</CompanyContext.Provider>

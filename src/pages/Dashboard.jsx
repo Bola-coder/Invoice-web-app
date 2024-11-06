@@ -19,11 +19,6 @@ const Dashboard = () => {
     getInvoiceStats,
     getPaymentStats,
   } = useInvoiceContext();
-  const [graphicalView, setGrahpcialView] = useState(false);
-
-  const handleViewToggle = () => {
-    setGrahpcialView(!graphicalView);
-  };
 
   useEffect(() => {
     const getInvoices = async () => {
@@ -43,24 +38,25 @@ const Dashboard = () => {
     <Box fontFamily={"IBM Plex Sans"} bg={"#E7ECF0"}>
       <Layout title={"Overview"}>
         <Box>
-          <DashboardHeader
-            user={user}
-            handleViewToggle={handleViewToggle}
-            graphicalView={graphicalView}
-          />
-          {graphicalView ? (
+          <DashboardHeader user={user} />
+
+          <Box>
+            <DashboardStats invoiceStats={invoiceStats} />
             <PaymentStatChart data={paymentStats} />
-          ) : (
-            <Box>
-              <DashboardStats invoiceStats={invoiceStats} />
-              <PaymentStatChart data={paymentStats} />
-            </Box>
-          )}
-          <Flex justifyContent={"space-between"} alignItems={"flex-start"}>
-            <Box width={"60%"}>
+          </Box>
+
+          <Flex
+            flexDirection={{ base: "column", lg: "row" }}
+            justifyContent={"space-between"}
+            alignItems={"flex-start"}
+          >
+            <Box width={{ base: "100%", lg: "60%" }}>
               <InvoiceList displayTitle={true} invoices={recentInvoice} />
             </Box>
-            <Box width={"35%"}>
+            <Box
+              width={{ base: "100%", lg: "35%" }}
+              // display={{ base: "none", lg: "block" }}
+            >
               <RecentTransactions />
             </Box>
           </Flex>

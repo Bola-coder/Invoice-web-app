@@ -8,6 +8,10 @@ import {
   Spinner,
   Grid,
   Icon,
+  Avatar,
+  Button,
+  useDisclosure,
+  Input,
 } from "@chakra-ui/react";
 import {
   FaEnvelope,
@@ -20,18 +24,37 @@ import {
 import { useParams } from "react-router-dom";
 import { useCompanyContext } from "../contexts/CompanyContext";
 import Layout from "../components/Layout";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import InvoiceList from "../components/InvoiceList";
 import ClientList from "../components/ClientList";
+import EditCompanyModal from "../components/EditCompanyModal";
 
 const CompanyDetails = () => {
   const { id } = useParams();
-  const { loading, getCompanyDetails, companyDetails } = useCompanyContext();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loading, getCompanyDetails, companyDetails, uploadCompanyLogo } =
+    useCompanyContext();
 
   useEffect(() => {
     getCompanyDetails(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  const inputRef = useRef(null);
+
+  const handleAvatarClick = () => {
+    inputRef.current.click(); // Trigger input click when Avatar is clicked
+  };
+
+  const handleFileChange = async (e) => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    // console.log("The Selected file is", file);
+    // const logo = new FormData();
+    // logo.append("logo", file);
+    // console.log(logo);
+    await uploadCompanyLogo(id, file);
+  };
 
   if (loading || Object.keys(companyDetails).length === 0) {
     return (
@@ -50,16 +73,39 @@ const CompanyDetails = () => {
           {/* Company Information Card */}
           <Box py={6}>
             <Flex justify="space-between" alignItems="center" mb={6}>
-              <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
-                {companyDetails?.name}
-              </Text>
-              <Badge
-                colorScheme={companyDetails?.active ? "green" : "red"}
-                variant="solid"
-                fontSize="0.9em"
-              >
-                {companyDetails?.active ? "Active" : "Inactive"}
-              </Badge>
+              <Box display={"flex"} alignItems={"center"} gap={4}>
+                <Avatar
+                  name={companyDetails?.name}
+                  size={"lg"}
+                  cursor={"pointer"}
+                  onClick={handleAvatarClick}
+                  src={companyDetails?.logo}
+                />
+                <Input
+                  type="file"
+                  ref={inputRef}
+                  onChange={handleFileChange}
+                  display="none" // Hide the input element
+                  accept="image/*"
+                />
+                <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
+                  {companyDetails?.name}
+                </Text>
+              </Box>
+              <Box>
+                <Badge
+                  colorScheme={companyDetails?.active ? "green" : "red"}
+                  variant="solid"
+                  fontSize="0.9em"
+                  size={"lg"}
+                  mr={6}
+                >
+                  {companyDetails?.active ? "Active" : "Inactive"}
+                </Badge>
+                <Button colorScheme="primary" onClick={onOpen}>
+                  Edit Company
+                </Button>
+              </Box>
             </Flex>
 
             <Grid templateColumns={["1fr", "1fr 1fr"]} gap={8}>
@@ -161,6 +207,7 @@ const CompanyDetails = () => {
           </Box>
           {/* </Box> */}
         </Flex>
+        <EditCompanyModal isOpen={isOpen} onClose={onClose} />
       </Box>
     </Layout>
   );

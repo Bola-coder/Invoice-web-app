@@ -1,12 +1,13 @@
-import { Flex, Box, Image, Text, Button } from "@chakra-ui/react";
+/* eslint-disable react/prop-types */
+import { Flex, Box, Text, Button } from "@chakra-ui/react";
 import routes from "../data/routes";
 import { NavLink, useLocation } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
 import { useAuth } from "../contexts/AuthContext";
 
-const SideNav = () => {
+const SideNav = ({ isMobile }) => {
   const location = useLocation();
-  const isActivePath = (path) => location.pathname === path;
+  const isActivePath = (path) => location.pathname.startsWith(path);
   const { logout } = useAuth();
 
   return (
@@ -18,15 +19,20 @@ const SideNav = () => {
       maxHeight={"100%"}
       overflowY={"hidden"}
       shadow={"lg"}
+      display={{ base: isMobile ? "block" : "none", lg: "block" }}
+      position={{ base: "fixed", lg: "inherit" }}
+      top={"0"}
+      left={"0"}
+      width={{ base: "80%", sm: "50%", lg: "auto" }}
+      zIndex={"1000"}
     >
-      <Box height={"8vh"} maxHeight={"8vh"}>
+      <Box height={"10vh"} maxHeight={"8vh"}>
         <Text
           as={"h1"}
           color={"primary.100"}
           fontSize={"32px"}
           fontWeight={600}
-          // textAlign={"center"}
-          // paddingTop={"10%"}
+          display={{ base: "none", lg: "block" }}
           p={4}
         >
           Swyft
@@ -41,21 +47,30 @@ const SideNav = () => {
             (route, index) =>
               route.position === "top" && (
                 <NavLink key={index} to={route.path}>
-                  <Box p={4} display={"flex"}>
-                    <Image
-                      src={
-                        isActivePath(route.path) ? route.activeIcon : route.icon
-                      }
-                      alt={route.name}
-                      marginRight={"10px"}
-                    />
+                  <Box p={4} display={"flex"} alignItems={"center"}>
+                    {isActivePath(route.path) ? (
+                      <route.activeIcon
+                        size={22}
+                        style={{
+                          marginRight: "10px",
+                        }}
+                        color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
+                      />
+                    ) : (
+                      <route.icon
+                        size={22}
+                        style={{
+                          marginRight: "10px",
+                        }}
+                        color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
+                      />
+                    )}
                     <Text
                       as={"span"}
                       href={route.path}
                       color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
                       display={"block"}
-                      _hover={{ textDecoration: "none", color: "#BFDB38" }}
-                      fontSize={"20px"}
+                      fontSize={{ base: "16px", md: "20px" }}
                       fontWeight={isActivePath(route.path) ? 600 : 400}
                     >
                       {route.name}
@@ -71,20 +86,31 @@ const SideNav = () => {
               route.position === "bottom" && (
                 <NavLink key={index} to={route.path}>
                   <Box p={4} display={"flex"}>
-                    <Image
-                      src={
-                        isActivePath(route.path) ? route.activeIcon : route.icon
-                      }
-                      alt={route.name}
-                      marginRight={"10px"}
-                    />
+                    {isActivePath(route.path) ? (
+                      <route.activeIcon
+                        size={22}
+                        style={{
+                          marginRight: "10px",
+                        }}
+                        color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
+                      />
+                    ) : (
+                      <route.icon
+                        size={22}
+                        style={{
+                          marginRight: "10px",
+                        }}
+                        color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
+                      />
+                    )}
+
                     <Text
                       as={"span"}
                       href={route.path}
                       color={isActivePath(route.path) ? "#BFDB38" : "#FFF"}
                       display={"block"}
                       _hover={{ textDecoration: "none" }}
-                      fontSize={"20px"}
+                      fontSize={{ base: "16px", md: "20px" }}
                       fontWeight={isActivePath(route.path) ? 600 : 400}
                     >
                       {route.name}
@@ -98,7 +124,7 @@ const SideNav = () => {
               <MdLogout
                 size={"20"}
                 color="#BFDB38"
-                style={{ marginRight: "5px" }}
+                style={{ marginRight: "10px" }}
               />
               <Text
                 as={"span"}

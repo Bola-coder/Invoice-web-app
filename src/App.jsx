@@ -36,12 +36,13 @@ function App() {
                 <InvoiceProvider>
                   <InvoicePaymentProvider>
                     <Routes>
+                      <Route path="/" element={<Dashboard />} />
                       <Route path="/signup" element={<Signup />} />
                       <Route path="/login" element={<Login />} />
 
                       {/* Protected Routes */}
                       <Route element={<ProtectedRoutes />}>
-                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
                         <Route path="/invoice" element={<Invoice />} />
                         <Route path="/client" element={<Client />} />
                         <Route path="/payment" element={<Payment />} />

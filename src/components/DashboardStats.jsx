@@ -12,17 +12,26 @@ import StatCard from "./StatCard";
 const DashboardStats = ({ invoiceStats }) => {
   return (
     <Box mt={"20px"}>
-      <Flex justifyContent={"space-between"}>
-        <Box flexBasis={"22%"}>
+      <Flex
+        justifyContent={"space-between"}
+        flexWrap={"wrap"} // Enables wrapping on smaller screens
+      >
+        <Box
+          flexBasis={{ base: "100%", sm: "48%", md: "22%" }}
+          mb={{ base: "10px", md: "0" }}
+        >
           <StatCard
             icon={FaFileInvoice}
             value={
               invoiceStats?.totalInvoices ? invoiceStats?.totalInvoices : 0
             }
-            text={"Invoices (Past 30 days)"}
+            text={"Invoices (30 days)"}
           />
         </Box>
-        <Box flexBasis={"22%"}>
+        <Box
+          flexBasis={{ base: "100%", sm: "48%", md: "22%" }}
+          mb={{ base: "10px", md: "0" }}
+        >
           <StatCard
             icon={FaDollarSign}
             value={
@@ -30,12 +39,15 @@ const DashboardStats = ({ invoiceStats }) => {
                 ? `NGN ${convertNumberToCurrencyFormat(
                     invoiceStats?.totalAmount
                   )}`
-                : 0
+                : `NGN ${0}`
             }
-            text={"Amount (Past 30 days)"}
+            text={"Amount (30 days)"}
           />
         </Box>
-        <Box flexBasis={"22%"}>
+        <Box
+          flexBasis={{ base: "100%", sm: "48%", md: "22%" }}
+          mb={{ base: "10px", md: "0" }}
+        >
           <StatCard
             icon={FaMoneyBillWave}
             value={
@@ -43,12 +55,12 @@ const DashboardStats = ({ invoiceStats }) => {
                 ? `NGN ${convertNumberToCurrencyFormat(
                     invoiceStats?.totalAmountRecieved
                   )}`
-                : 0
+                : `NGN ${0}`
             }
             text={"Payment (In)"}
           />
         </Box>
-        <Box flexBasis={"22%"}>
+        <Box flexBasis={{ base: "100%", sm: "48%", md: "22%" }}>
           <StatCard
             icon={FaBalanceScale}
             value={
@@ -56,7 +68,7 @@ const DashboardStats = ({ invoiceStats }) => {
                 ? `NGN ${convertNumberToCurrencyFormat(
                     invoiceStats?.balanceDue
                   )}`
-                : 0
+                : `NGN ${0}`
             }
             text={"Balance (Out)"}
           />

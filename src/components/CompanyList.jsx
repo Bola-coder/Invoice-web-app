@@ -8,8 +8,9 @@ import {
   HStack,
   Badge,
   Icon,
+  Avatar,
 } from "@chakra-ui/react";
-import { FaBuilding, FaEnvelope, FaLocationArrow } from "react-icons/fa";
+import { FaEnvelope, FaLocationArrow } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const CompanyList = ({ companies }) => {
@@ -59,7 +60,7 @@ const CompanyList = ({ companies }) => {
               }}
             >
               <HStack spacing={4} mb={3} align="center">
-                <Icon as={FaBuilding} boxSize={6} color="primary.500" />
+                <Avatar name={company.name} src={company?.logo} />
                 <Text as={"h2"} fontSize={"20px"} fontWeight={500}>
                   {company.name}
                 </Text>

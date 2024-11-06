@@ -33,7 +33,7 @@ const CreateInvoice = () => {
       items: [{ itemName: "", quantity: 0, price: 0 }],
     },
     validationSchema: Yup.object({
-      company: Yup.string().required("Company is required"),
+      company: Yup.string(),
       client: Yup.string().required("Client is required"),
       invoiceDate: Yup.date().required("Invoice date is required"),
       dueDate: Yup.date().required("Due date is required"),
@@ -52,7 +52,8 @@ const CreateInvoice = () => {
     onSubmit: (values) => {
       console.log(values);
       if (values.company === "") {
-        createInvoice(values);
+        const { company, ...data } = values;
+        createInvoice(data);
       } else {
         createCompanyInvoice(values);
       }
@@ -243,7 +244,12 @@ const CreateInvoice = () => {
                 </FormControl> */}
               </Flex>
               <Flex justifyContent={"flex-end"}>
-                <Button mt={6} colorScheme="primary" type="submit">
+                <Button
+                  mt={6}
+                  colorScheme="primary"
+                  type="submit"
+                  onClick={() => console.log("I am working")}
+                >
                   {loading ? (
                     <Spinner color="white" size={"md"} />
                   ) : (

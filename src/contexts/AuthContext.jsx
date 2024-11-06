@@ -64,7 +64,7 @@ const AuthProvider = ({ children }) => {
           description: "You have successfully created an account.",
           status: "success",
         });
-        navigation("/");
+        navigation("/dashboard");
       })
       .catch((error) => {
         console.error(error);
@@ -107,7 +107,7 @@ const AuthProvider = ({ children }) => {
           description: "You have successfully logged in.",
           status: "success",
         });
-        navigation("/");
+        navigation("/dashboard");
       })
       .catch((error) => {
         console.error(error);
